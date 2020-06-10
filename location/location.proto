@@ -1,5 +1,5 @@
 syntax = "proto3";
-package dealer;
+package location;
 
 import "github.com/cargod-bj/b2c-proto-common/common/common.proto";
 import "google/protobuf/any.proto";

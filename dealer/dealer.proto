@@ -1,0 +1,37 @@
+syntax = "proto3";
+package dealer;
+
+import "github.com/cargod-bj/b2c-proto-common/common/common.proto";
+import "google/protobuf/any.proto";
+
+option go_package = "github.com/cargod-bj/b2c-store-api/dealer";
+
+service Dealer {
+  rpc Login(DealerDto) returns (common.Response) {}
+  rpc Add(DealerDto) returns (common.Response) {}
+  rpc Delete(DealerDto) returns (common.Response) {}
+  rpc Update(DealerDto) returns (common.Response) {}
+  rpc List(common.Page) returns (common.Response) {}
+}
+
+
+message DealerDto{
+  uint64 Id = 1;
+  string DealerId = 2;
+  uint32   DealershipType = 3;
+  string RegistrationId = 4;
+  string Name = 5;
+  string Address = 6;
+  string Logo = 7;
+  string Email = 8;
+  string Telephone = 9;
+  uint64 CreateTime = 10;
+  uint64 UpdateTime = 11;
+}
+
+message PagedList{
+  uint32 pageNo = 1;
+  uint32 pageSize = 2;
+  uint32 total = 3;
+  repeated google.protobuf.Any list = 4;
+}

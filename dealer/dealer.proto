@@ -28,7 +28,12 @@ message DealerDto{
   int64 CreateTime = 10;
   int64 UpdateTime = 11;
 }
-
+message SyncDealerData{
+  string DealerId = 2;
+  uint32   DealershipType = 3;
+  string RegistrationId = 4;
+  string Name = 5;
+}
 message PagedList{
   uint32 pageNo = 1;
   uint32 pageSize = 2;

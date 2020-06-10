@@ -7,7 +7,6 @@ import "google/protobuf/any.proto";
 option go_package = "github.com/cargod-bj/b2c-store-api/dealer";
 
 service Dealer {
-  rpc Login(DealerDto) returns (common.Response) {}
   rpc Add(DealerDto) returns (common.Response) {}
   rpc Delete(DealerDto) returns (common.Response) {}
   rpc Update(DealerDto) returns (common.Response) {}

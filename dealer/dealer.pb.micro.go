@@ -44,7 +44,6 @@ func NewDealerEndpoints() []*api.Endpoint {
 // Client API for Dealer service
 
 type DealerService interface {
-	Login(ctx context.Context, in *DealerDto, opts ...client.CallOption) (*common.Response, error)
 	Add(ctx context.Context, in *DealerDto, opts ...client.CallOption) (*common.Response, error)
 	Delete(ctx context.Context, in *DealerDto, opts ...client.CallOption) (*common.Response, error)
 	Update(ctx context.Context, in *DealerDto, opts ...client.CallOption) (*common.Response, error)
@@ -61,16 +60,6 @@ func NewDealerService(name string, c client.Client) DealerService {
 		c:    c,
 		name: name,
 	}
-}
-
-func (c *dealerService) Login(ctx context.Context, in *DealerDto, opts ...client.CallOption) (*common.Response, error) {
-	req := c.c.NewRequest(c.name, "Dealer.Login", in)
-	out := new(common.Response)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *dealerService) Add(ctx context.Context, in *DealerDto, opts ...client.CallOption) (*common.Response, error) {
@@ -116,7 +105,6 @@ func (c *dealerService) List(ctx context.Context, in *common.Page, opts ...clien
 // Server API for Dealer service
 
 type DealerHandler interface {
-	Login(context.Context, *DealerDto, *common.Response) error
 	Add(context.Context, *DealerDto, *common.Response) error
 	Delete(context.Context, *DealerDto, *common.Response) error
 	Update(context.Context, *DealerDto, *common.Response) error
@@ -125,7 +113,6 @@ type DealerHandler interface {
 
 func RegisterDealerHandler(s server.Server, hdlr DealerHandler, opts ...server.HandlerOption) error {
 	type dealer interface {
-		Login(ctx context.Context, in *DealerDto, out *common.Response) error
 		Add(ctx context.Context, in *DealerDto, out *common.Response) error
 		Delete(ctx context.Context, in *DealerDto, out *common.Response) error
 		Update(ctx context.Context, in *DealerDto, out *common.Response) error
@@ -140,10 +127,6 @@ func RegisterDealerHandler(s server.Server, hdlr DealerHandler, opts ...server.H
 
 type dealerHandler struct {
 	DealerHandler
-}
-
-func (h *dealerHandler) Login(ctx context.Context, in *DealerDto, out *common.Response) error {
-	return h.DealerHandler.Login(ctx, in, out)
 }
 
 func (h *dealerHandler) Add(ctx context.Context, in *DealerDto, out *common.Response) error {

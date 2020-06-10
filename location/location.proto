@@ -1,0 +1,34 @@
+syntax = "proto3";
+package dealer;
+
+import "github.com/cargod-bj/b2c-proto-common/common/common.proto";
+import "google/protobuf/any.proto";
+
+option go_package = "github.com/cargod-bj/b2c-store-api/location";
+
+service Location {
+  rpc Add(LocationDto) returns (common.Response) {}
+  rpc Delete(LocationDto) returns (common.Response) {}
+  rpc Update(LocationDto) returns (common.Response) {}
+  rpc List(common.Page) returns (common.Response) {}
+}
+
+
+message LocationDto{
+  uint64     Id = 1;
+  string     Code = 2;
+  string     Name = 3;
+  string     Description = 4;
+  string     MapUrl = 5;
+  float    Latitude = 6;
+  float    Longitude = 7;
+  int64 CreateTime = 8;
+  int64 UpdateTime = 9;
+}
+
+message PagedList{
+  uint32 pageNo = 1;
+  uint32 pageSize = 2;
+  uint32 total = 3;
+  repeated google.protobuf.Any list = 4;
+}

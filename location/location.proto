@@ -20,8 +20,8 @@ message LocationDto{
   string     Name = 3;
   string     Description = 4;
   string     MapUrl = 5;
-  float    Latitude = 6;
-  float    Longitude = 7;
+  string    Latitude = 6;
+  string    Longitude = 7;
   int64 CreateTime = 8;
   int64 UpdateTime = 9;
 }

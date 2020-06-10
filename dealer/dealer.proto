@@ -25,8 +25,8 @@ message DealerDto{
   string Logo = 7;
   string Email = 8;
   string Telephone = 9;
-  uint64 CreateTime = 10;
-  uint64 UpdateTime = 11;
+  int64 CreateTime = 10;
+  int64 UpdateTime = 11;
 }
 
 message PagedList{

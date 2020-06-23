@@ -49,6 +49,7 @@ type DealerService interface {
 	Update(ctx context.Context, in *DealerDto, opts ...client.CallOption) (*common.Response, error)
 	List(ctx context.Context, in *common.Page, opts ...client.CallOption) (*common.Response, error)
 	SyncDealer(ctx context.Context, in *common.Page, opts ...client.CallOption) (*common.Response, error)
+	Get(ctx context.Context, in *DealerDto, opts ...client.CallOption) (*common.Response, error)
 }
 
 type dealerService struct {
@@ -113,6 +114,16 @@ func (c *dealerService) SyncDealer(ctx context.Context, in *common.Page, opts ..
 	return out, nil
 }
 
+func (c *dealerService) Get(ctx context.Context, in *DealerDto, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Dealer.Get", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for Dealer service
 
 type DealerHandler interface {
@@ -121,6 +132,7 @@ type DealerHandler interface {
 	Update(context.Context, *DealerDto, *common.Response) error
 	List(context.Context, *common.Page, *common.Response) error
 	SyncDealer(context.Context, *common.Page, *common.Response) error
+	Get(context.Context, *DealerDto, *common.Response) error
 }
 
 func RegisterDealerHandler(s server.Server, hdlr DealerHandler, opts ...server.HandlerOption) error {
@@ -130,6 +142,7 @@ func RegisterDealerHandler(s server.Server, hdlr DealerHandler, opts ...server.H
 		Update(ctx context.Context, in *DealerDto, out *common.Response) error
 		List(ctx context.Context, in *common.Page, out *common.Response) error
 		SyncDealer(ctx context.Context, in *common.Page, out *common.Response) error
+		Get(ctx context.Context, in *DealerDto, out *common.Response) error
 	}
 	type Dealer struct {
 		dealer
@@ -160,4 +173,8 @@ func (h *dealerHandler) List(ctx context.Context, in *common.Page, out *common.R
 
 func (h *dealerHandler) SyncDealer(ctx context.Context, in *common.Page, out *common.Response) error {
 	return h.DealerHandler.SyncDealer(ctx, in, out)
+}
+
+func (h *dealerHandler) Get(ctx context.Context, in *DealerDto, out *common.Response) error {
+	return h.DealerHandler.Get(ctx, in, out)
 }

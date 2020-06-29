@@ -13,10 +13,20 @@ service Store {
   rpc Update(StoreDTO) returns (common.Response) {}
 
   rpc Delete(IdDTO) returns (common.Response) {}
+  // 获取ids获取一组store.
+  //  Data = common.Page {
+  //    List = List<StoreSimpleDto>
+  //  }
+  rpc ListSimpleInfoByIds(IdsDto) returns (common.Response) {}
 }
 
 message IdDTO {
   uint64 id = 1;
+}
+
+// 指定的一组ids
+message IdsDto {
+  repeated uint64 ids = 1;
 }
 
 message StoreDTO {
@@ -31,8 +41,14 @@ message StoreDTO {
   string country = 9;
   google.protobuf.Timestamp createTime = 10;
   google.protobuf.Timestamp updateTime = 11;
-  uint32 status =12;
+  uint32 status = 12;
   string DealerId = 13;
+}
+
+// store的简单信息dto
+message StoreSimpleDto {
+  uint64 id = 1;
+  string name = 2;
 }
 
 message StoreCondition{

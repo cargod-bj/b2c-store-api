@@ -13,6 +13,9 @@ service Store {
   rpc Update(StoreDTO) returns (common.Response) {}
 
   rpc Delete(IdDTO) returns (common.Response) {}
+
+  rpc Get(IdDTO) returns (common.Response) {}
+
   // 获取ids获取一组store.
   //  Data = common.Page {
   //    List = List<StoreSimpleDto>
@@ -43,6 +46,7 @@ message StoreDTO {
   google.protobuf.Timestamp updateTime = 11;
   uint32 status = 12;
   string DealerId = 13;
+  string location = 14;
 }
 
 // store的简单信息dto

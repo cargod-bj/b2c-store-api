@@ -49,6 +49,7 @@ type StoreService interface {
 	List(ctx context.Context, in *StoreCondition, opts ...client.CallOption) (*common.Response, error)
 	Update(ctx context.Context, in *StoreDTO, opts ...client.CallOption) (*common.Response, error)
 	Delete(ctx context.Context, in *IdDTO, opts ...client.CallOption) (*common.Response, error)
+	Get(ctx context.Context, in *IdDTO, opts ...client.CallOption) (*common.Response, error)
 	// 获取ids获取一组store.
 	//  Data = common.Page {
 	//    List = List<StoreSimpleDto>
@@ -108,6 +109,16 @@ func (c *storeService) Delete(ctx context.Context, in *IdDTO, opts ...client.Cal
 	return out, nil
 }
 
+func (c *storeService) Get(ctx context.Context, in *IdDTO, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Store.Get", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *storeService) ListSimpleInfoByIds(ctx context.Context, in *IdsDto, opts ...client.CallOption) (*common.Response, error) {
 	req := c.c.NewRequest(c.name, "Store.ListSimpleInfoByIds", in)
 	out := new(common.Response)
@@ -125,6 +136,7 @@ type StoreHandler interface {
 	List(context.Context, *StoreCondition, *common.Response) error
 	Update(context.Context, *StoreDTO, *common.Response) error
 	Delete(context.Context, *IdDTO, *common.Response) error
+	Get(context.Context, *IdDTO, *common.Response) error
 	// 获取ids获取一组store.
 	//  Data = common.Page {
 	//    List = List<StoreSimpleDto>
@@ -138,6 +150,7 @@ func RegisterStoreHandler(s server.Server, hdlr StoreHandler, opts ...server.Han
 		List(ctx context.Context, in *StoreCondition, out *common.Response) error
 		Update(ctx context.Context, in *StoreDTO, out *common.Response) error
 		Delete(ctx context.Context, in *IdDTO, out *common.Response) error
+		Get(ctx context.Context, in *IdDTO, out *common.Response) error
 		ListSimpleInfoByIds(ctx context.Context, in *IdsDto, out *common.Response) error
 	}
 	type Store struct {
@@ -165,6 +178,10 @@ func (h *storeHandler) Update(ctx context.Context, in *StoreDTO, out *common.Res
 
 func (h *storeHandler) Delete(ctx context.Context, in *IdDTO, out *common.Response) error {
 	return h.StoreHandler.Delete(ctx, in, out)
+}
+
+func (h *storeHandler) Get(ctx context.Context, in *IdDTO, out *common.Response) error {
+	return h.StoreHandler.Get(ctx, in, out)
 }
 
 func (h *storeHandler) ListSimpleInfoByIds(ctx context.Context, in *IdsDto, out *common.Response) error {

@@ -13,6 +13,8 @@ service Store {
   rpc Update(StoreDTO) returns (common.Response) {}
 
   rpc Delete(IdDTO) returns (common.Response) {}
+
+  rpc Get(IdDTO) returns (common.Response) {}
 }
 
 message IdDTO {
@@ -33,6 +35,7 @@ message StoreDTO {
   google.protobuf.Timestamp updateTime = 11;
   uint32 status =12;
   string DealerId = 13;
+  string location = 14;
 }
 
 message StoreCondition{

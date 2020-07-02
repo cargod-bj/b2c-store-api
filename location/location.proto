@@ -3,6 +3,7 @@ package location;
 
 import "github.com/cargod-bj/b2c-proto-common/common/common.proto";
 import "google/protobuf/any.proto";
+import "store/store.proto";
 
 option go_package = "github.com/cargod-bj/b2c-store-api/location";
 
@@ -11,8 +12,13 @@ service Location {
   rpc Delete(LocationDto) returns (common.Response) {}
   rpc Update(LocationDto) returns (common.Response) {}
   rpc List(common.Page) returns (common.Response) {}
-}
 
+  // 获取ids获取一组store.
+  //  Data = common.Page {
+  //    List = List<LocationDto>
+  //  }
+  rpc ListByIds(store.IdsDto) returns (common.Response) {}
+}
 
 message LocationDto{
   uint64     Id = 1;

@@ -6,6 +6,7 @@ package location
 import (
 	fmt "fmt"
 	common "github.com/cargod-bj/b2c-proto-common/common"
+	store "github.com/cargod-bj/b2c-store-api/store"
 	proto "github.com/golang/protobuf/proto"
 	_ "github.com/golang/protobuf/ptypes/any"
 	math "math"
@@ -48,6 +49,11 @@ type LocationService interface {
 	Delete(ctx context.Context, in *LocationDto, opts ...client.CallOption) (*common.Response, error)
 	Update(ctx context.Context, in *LocationDto, opts ...client.CallOption) (*common.Response, error)
 	List(ctx context.Context, in *common.Page, opts ...client.CallOption) (*common.Response, error)
+	// 获取ids获取一组store.
+	//  Data = common.Page {
+	//    List = List<LocationDto>
+	//  }
+	ListByIds(ctx context.Context, in *store.IdsDto, opts ...client.CallOption) (*common.Response, error)
 }
 
 type locationService struct {
@@ -102,6 +108,16 @@ func (c *locationService) List(ctx context.Context, in *common.Page, opts ...cli
 	return out, nil
 }
 
+func (c *locationService) ListByIds(ctx context.Context, in *store.IdsDto, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Location.ListByIds", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for Location service
 
 type LocationHandler interface {
@@ -109,6 +125,11 @@ type LocationHandler interface {
 	Delete(context.Context, *LocationDto, *common.Response) error
 	Update(context.Context, *LocationDto, *common.Response) error
 	List(context.Context, *common.Page, *common.Response) error
+	// 获取ids获取一组store.
+	//  Data = common.Page {
+	//    List = List<LocationDto>
+	//  }
+	ListByIds(context.Context, *store.IdsDto, *common.Response) error
 }
 
 func RegisterLocationHandler(s server.Server, hdlr LocationHandler, opts ...server.HandlerOption) error {
@@ -117,6 +138,7 @@ func RegisterLocationHandler(s server.Server, hdlr LocationHandler, opts ...serv
 		Delete(ctx context.Context, in *LocationDto, out *common.Response) error
 		Update(ctx context.Context, in *LocationDto, out *common.Response) error
 		List(ctx context.Context, in *common.Page, out *common.Response) error
+		ListByIds(ctx context.Context, in *store.IdsDto, out *common.Response) error
 	}
 	type Location struct {
 		location
@@ -143,4 +165,8 @@ func (h *locationHandler) Update(ctx context.Context, in *LocationDto, out *comm
 
 func (h *locationHandler) List(ctx context.Context, in *common.Page, out *common.Response) error {
 	return h.LocationHandler.List(ctx, in, out)
+}
+
+func (h *locationHandler) ListByIds(ctx context.Context, in *store.IdsDto, out *common.Response) error {
+	return h.LocationHandler.ListByIds(ctx, in, out)
 }

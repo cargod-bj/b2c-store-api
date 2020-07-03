@@ -21,6 +21,8 @@ service Store {
   //    List = List<StoreSimpleDto>
   //  }
   rpc ListSimpleInfoByIds(IdsDto) returns (common.Response) {}
+  //查询storename以及address
+  rpc ListLocation(IdsDto) returns (common.Response) {}
 }
 
 message IdDTO {

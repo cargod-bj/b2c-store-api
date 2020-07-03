@@ -41,7 +41,7 @@ message StoreDTO {
   string manager_id = 4;
   string logo = 5;
   string photos = 6;
-  uint64 location_id = 7;
+  string address = 7;
   string description = 8;
   string country = 9;
   google.protobuf.Timestamp createTime = 10;

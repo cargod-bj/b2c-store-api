@@ -48,7 +48,6 @@ message StoreDTO {
   google.protobuf.Timestamp updateTime = 11;
   uint32 status = 12;
   string DealerId = 13;
-  string location = 14;
 }
 
 // store的简单信息dto

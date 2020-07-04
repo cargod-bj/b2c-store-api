@@ -7,8 +7,6 @@ import (
 	fmt "fmt"
 	common "github.com/cargod-bj/b2c-proto-common/common"
 	proto "github.com/golang/protobuf/proto"
-	_ "github.com/golang/protobuf/ptypes/any"
-	_ "github.com/golang/protobuf/ptypes/timestamp"
 	math "math"
 )
 
@@ -48,8 +46,8 @@ type StoreService interface {
 	Add(ctx context.Context, in *StoreDTO, opts ...client.CallOption) (*common.Response, error)
 	List(ctx context.Context, in *StoreCondition, opts ...client.CallOption) (*common.Response, error)
 	Update(ctx context.Context, in *StoreDTO, opts ...client.CallOption) (*common.Response, error)
-	Delete(ctx context.Context, in *IdDTO, opts ...client.CallOption) (*common.Response, error)
-	Get(ctx context.Context, in *IdDTO, opts ...client.CallOption) (*common.Response, error)
+	Delete(ctx context.Context, in *common.IdDto, opts ...client.CallOption) (*common.Response, error)
+	Get(ctx context.Context, in *common.IdDto, opts ...client.CallOption) (*common.Response, error)
 	// 获取ids获取一组store.
 	//  Data = common.Page {
 	//    List = List<StoreSimpleDto>
@@ -101,7 +99,7 @@ func (c *storeService) Update(ctx context.Context, in *StoreDTO, opts ...client.
 	return out, nil
 }
 
-func (c *storeService) Delete(ctx context.Context, in *IdDTO, opts ...client.CallOption) (*common.Response, error) {
+func (c *storeService) Delete(ctx context.Context, in *common.IdDto, opts ...client.CallOption) (*common.Response, error) {
 	req := c.c.NewRequest(c.name, "Store.Delete", in)
 	out := new(common.Response)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -111,7 +109,7 @@ func (c *storeService) Delete(ctx context.Context, in *IdDTO, opts ...client.Cal
 	return out, nil
 }
 
-func (c *storeService) Get(ctx context.Context, in *IdDTO, opts ...client.CallOption) (*common.Response, error) {
+func (c *storeService) Get(ctx context.Context, in *common.IdDto, opts ...client.CallOption) (*common.Response, error) {
 	req := c.c.NewRequest(c.name, "Store.Get", in)
 	out := new(common.Response)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -147,8 +145,8 @@ type StoreHandler interface {
 	Add(context.Context, *StoreDTO, *common.Response) error
 	List(context.Context, *StoreCondition, *common.Response) error
 	Update(context.Context, *StoreDTO, *common.Response) error
-	Delete(context.Context, *IdDTO, *common.Response) error
-	Get(context.Context, *IdDTO, *common.Response) error
+	Delete(context.Context, *common.IdDto, *common.Response) error
+	Get(context.Context, *common.IdDto, *common.Response) error
 	// 获取ids获取一组store.
 	//  Data = common.Page {
 	//    List = List<StoreSimpleDto>
@@ -163,8 +161,8 @@ func RegisterStoreHandler(s server.Server, hdlr StoreHandler, opts ...server.Han
 		Add(ctx context.Context, in *StoreDTO, out *common.Response) error
 		List(ctx context.Context, in *StoreCondition, out *common.Response) error
 		Update(ctx context.Context, in *StoreDTO, out *common.Response) error
-		Delete(ctx context.Context, in *IdDTO, out *common.Response) error
-		Get(ctx context.Context, in *IdDTO, out *common.Response) error
+		Delete(ctx context.Context, in *common.IdDto, out *common.Response) error
+		Get(ctx context.Context, in *common.IdDto, out *common.Response) error
 		ListSimpleInfoByIds(ctx context.Context, in *IdsDto, out *common.Response) error
 		ListLocation(ctx context.Context, in *IdsDto, out *common.Response) error
 	}
@@ -191,11 +189,11 @@ func (h *storeHandler) Update(ctx context.Context, in *StoreDTO, out *common.Res
 	return h.StoreHandler.Update(ctx, in, out)
 }
 
-func (h *storeHandler) Delete(ctx context.Context, in *IdDTO, out *common.Response) error {
+func (h *storeHandler) Delete(ctx context.Context, in *common.IdDto, out *common.Response) error {
 	return h.StoreHandler.Delete(ctx, in, out)
 }
 
-func (h *storeHandler) Get(ctx context.Context, in *IdDTO, out *common.Response) error {
+func (h *storeHandler) Get(ctx context.Context, in *common.IdDto, out *common.Response) error {
 	return h.StoreHandler.Get(ctx, in, out)
 }
 

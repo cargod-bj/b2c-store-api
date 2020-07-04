@@ -3,8 +3,6 @@ syntax = "proto3";
 package store;
 option go_package = "github.com/cargod-bj/b2c-store-api/store";
 import "github.com/cargod-bj/b2c-proto-common/common/common.proto";
-import "google/protobuf/any.proto";
-import "google/protobuf/timestamp.proto";
 service Store {
   rpc Add(StoreDTO) returns (common.Response) {}
 
@@ -12,9 +10,9 @@ service Store {
 
   rpc Update(StoreDTO) returns (common.Response) {}
 
-  rpc Delete(IdDTO) returns (common.Response) {}
+  rpc Delete(common.IdDto) returns (common.Response) {}
 
-  rpc Get(IdDTO) returns (common.Response) {}
+  rpc Get(common.IdDto) returns (common.Response) {}
 
   // 获取ids获取一组store.
   //  Data = common.Page {
@@ -43,11 +41,15 @@ message StoreDTO {
   string photos = 6;
   string address = 7;
   string description = 8;
-  string country = 9;
-  google.protobuf.Timestamp createTime = 10;
-  google.protobuf.Timestamp updateTime = 11;
+  string city = 9;
+  int64 createTime = 10;
+  int64 updateTime = 11;
   uint32 status = 12;
-  string DealerId = 13;
+  string dealerId = 13;
+  string openHours = 14;
+  string testDriverServiceHours = 15;
+  string type = 16;
+  string state = 17;
 }
 
 // store的简单信息dto
@@ -57,22 +59,8 @@ message StoreSimpleDto {
 }
 
 message StoreCondition{
-  Page page = 1;
+  common.Page page = 1;
   string name = 2;
 }
 
-message Page{
-  uint32 pageNo = 1;
-  uint32 pageSize = 2;
-}
-
-message Response {
-  string msg = 1;
-  google.protobuf.Any data = 3;
-  string code = 2;
-}
-
-message AddStoreData{
-  uint64 id = 1;
-}
 

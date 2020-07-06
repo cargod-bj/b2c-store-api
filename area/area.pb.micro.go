@@ -47,7 +47,7 @@ type AreaService interface {
 	Delete(ctx context.Context, in *common.IdDto, opts ...client.CallOption) (*common.Response, error)
 	Update(ctx context.Context, in *AreaDto, opts ...client.CallOption) (*common.Response, error)
 	TopList(ctx context.Context, in *common.LocalDto, opts ...client.CallOption) (*common.Response, error)
-	ChildList(ctx context.Context, in *common.IdLocalDTO, opts ...client.CallOption) (*common.Response, error)
+	ChildList(ctx context.Context, in *ParentCode, opts ...client.CallOption) (*common.Response, error)
 }
 
 type areaService struct {
@@ -102,7 +102,7 @@ func (c *areaService) TopList(ctx context.Context, in *common.LocalDto, opts ...
 	return out, nil
 }
 
-func (c *areaService) ChildList(ctx context.Context, in *common.IdLocalDTO, opts ...client.CallOption) (*common.Response, error) {
+func (c *areaService) ChildList(ctx context.Context, in *ParentCode, opts ...client.CallOption) (*common.Response, error) {
 	req := c.c.NewRequest(c.name, "Area.ChildList", in)
 	out := new(common.Response)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -119,7 +119,7 @@ type AreaHandler interface {
 	Delete(context.Context, *common.IdDto, *common.Response) error
 	Update(context.Context, *AreaDto, *common.Response) error
 	TopList(context.Context, *common.LocalDto, *common.Response) error
-	ChildList(context.Context, *common.IdLocalDTO, *common.Response) error
+	ChildList(context.Context, *ParentCode, *common.Response) error
 }
 
 func RegisterAreaHandler(s server.Server, hdlr AreaHandler, opts ...server.HandlerOption) error {
@@ -128,7 +128,7 @@ func RegisterAreaHandler(s server.Server, hdlr AreaHandler, opts ...server.Handl
 		Delete(ctx context.Context, in *common.IdDto, out *common.Response) error
 		Update(ctx context.Context, in *AreaDto, out *common.Response) error
 		TopList(ctx context.Context, in *common.LocalDto, out *common.Response) error
-		ChildList(ctx context.Context, in *common.IdLocalDTO, out *common.Response) error
+		ChildList(ctx context.Context, in *ParentCode, out *common.Response) error
 	}
 	type Area struct {
 		area
@@ -157,6 +157,6 @@ func (h *areaHandler) TopList(ctx context.Context, in *common.LocalDto, out *com
 	return h.AreaHandler.TopList(ctx, in, out)
 }
 
-func (h *areaHandler) ChildList(ctx context.Context, in *common.IdLocalDTO, out *common.Response) error {
+func (h *areaHandler) ChildList(ctx context.Context, in *ParentCode, out *common.Response) error {
 	return h.AreaHandler.ChildList(ctx, in, out)
 }

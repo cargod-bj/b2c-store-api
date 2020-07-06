@@ -48,7 +48,7 @@ message StoreDTO {
   string dealerId = 13;
   string openHours = 14;
   string testDriverServiceHours = 15;
-  string type = 16;
+  uint32 type = 16;
   string state = 17;
 }
 

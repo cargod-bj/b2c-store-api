@@ -10,10 +10,14 @@ service Area {
   rpc Delete(common.IdDto) returns (common.Response) {}
   rpc Update(AreaDto) returns (common.Response) {}
   rpc TopList(common.LocalDto) returns (common.Response) {}
-  rpc ChildList(common.IdLocalDTO) returns (common.Response) {}
+  rpc ChildList(ParentCode) returns (common.Response) {}
 }
 
 
+message ParentCode{
+  string code = 1 ;
+  string local = 2;
+}
 message AreaDto{
   uint64 Id = 1;
   string code = 2;

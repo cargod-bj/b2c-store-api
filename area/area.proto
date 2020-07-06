@@ -22,3 +22,7 @@ message AreaDto{
   int64 createTime = 10;
   int64 updateTime = 11;
 }
+
+message AreaList{
+  repeated AreaDto areaDTOs = 1;
+}

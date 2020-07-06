@@ -3,7 +3,7 @@ package dealer;
 
 import "github.com/cargod-bj/b2c-proto-common/common/common.proto";
 
-option go_package = "github.com/cargod-bj/b2c-store-api/are";
+option go_package = "github.com/cargod-bj/b2c-store-api/area";
 
 service Area {
   rpc Add(AreaDto) returns (common.Response) {}

@@ -30,6 +30,8 @@ message DealerDto{
   string State = 12;
   string Area = 13;
   string DealershipName = 14;
+  uint32 Status = 15;
+  string Remark = 16;
 }
 message SyncDealerData{
   string DealerId = 2;

@@ -50,6 +50,7 @@ message StoreDTO {
   string testDriverServiceHours = 15;
   uint32 type = 16;
   string state = 17;
+  string mapUrl = 18;
 }
 
 // store的简单信息dto

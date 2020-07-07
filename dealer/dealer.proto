@@ -25,13 +25,16 @@ message DealerDto{
   string Logo = 7;
   string Email = 8;
   string Telephone = 9;
-  int64 CreateTime = 10;
-  int64 UpdateTime = 11;
+  int64  CreateTime = 10;
+  int64  UpdateTime = 11;
   string State = 12;
   string Area = 13;
   string DealershipName = 14;
   uint32 Status = 15;
   string Remark = 16;
+  string StateName = 17;
+  string AreaName = 18;
+  string StatusDescription = 19;
 }
 message SyncDealerData{
   string DealerId = 2;

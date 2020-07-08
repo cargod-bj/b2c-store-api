@@ -42,8 +42,8 @@ message StoreDTO {
   string address = 7;
   string description = 8;
   string city = 9;
-  int64 createTime = 10;
-  int64 updateTime = 11;
+  int64  createTime = 10;
+  int64  updateTime = 11;
   uint32 status = 12;
   string dealerId = 13;
   string openHours = 14;
@@ -51,6 +51,31 @@ message StoreDTO {
   uint32 type = 16;
   string state = 17;
   string mapUrl = 18;
+}
+
+message StoreListDTO {
+  uint64 id = 1;
+  string name = 2;
+  string telephone = 3;
+  string manager_id = 4;
+  string logo = 5;
+  string photos = 6;
+  string address = 7;
+  string description = 8;
+  string city = 9;
+  int64  createTime = 10;
+  int64  updateTime = 11;
+  uint32 status = 12;
+  uint64 dealerId = 13;
+  string openHours = 14;
+  string testDriverServiceHours = 15;
+  uint32 type = 16;
+  string state = 17;
+  string stateName = 18;
+  string cityName = 19;
+  string statusDescription = 20;
+  string managerName = 21;
+  string dealershipName = 23;
 }
 
 // store的简单信息dto

@@ -36,7 +36,7 @@ message StoreDTO {
   uint64 id = 1;
   string name = 2;
   string telephone = 3;
-  string manager_id = 4;
+  uint64 manager_id = 4;
   string logo = 5;
   string photos = 6;
   string address = 7;
@@ -45,7 +45,7 @@ message StoreDTO {
   int64  createTime = 10;
   int64  updateTime = 11;
   uint32 status = 12;
-  string dealerId = 13;
+  uint64 dealerId = 13;
   string openHours = 14;
   string testDriverServiceHours = 15;
   uint32 type = 16;
@@ -57,7 +57,7 @@ message StoreListDTO {
   uint64 id = 1;
   string name = 2;
   string telephone = 3;
-  string manager_id = 4;
+  uint64 manager_id = 4;
   string logo = 5;
   string photos = 6;
   string address = 7;

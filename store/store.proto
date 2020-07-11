@@ -87,6 +87,7 @@ message StoreSimpleDto {
 message StoreCondition{
   common.Page page = 1;
   string name = 2;
+  uint64 dealerId = 3;
 }
 
 

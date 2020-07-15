@@ -49,6 +49,7 @@ type DealerService interface {
 	List(ctx context.Context, in *common.Page, opts ...client.CallOption) (*common.Response, error)
 	SyncDealer(ctx context.Context, in *common.Page, opts ...client.CallOption) (*common.Response, error)
 	Get(ctx context.Context, in *common.IdLocalDTO, opts ...client.CallOption) (*common.Response, error)
+	GetListByIds(ctx context.Context, in *IdsDto, opts ...client.CallOption) (*common.Response, error)
 }
 
 type dealerService struct {
@@ -123,6 +124,16 @@ func (c *dealerService) Get(ctx context.Context, in *common.IdLocalDTO, opts ...
 	return out, nil
 }
 
+func (c *dealerService) GetListByIds(ctx context.Context, in *IdsDto, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Dealer.GetListByIds", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for Dealer service
 
 type DealerHandler interface {
@@ -132,6 +143,7 @@ type DealerHandler interface {
 	List(context.Context, *common.Page, *common.Response) error
 	SyncDealer(context.Context, *common.Page, *common.Response) error
 	Get(context.Context, *common.IdLocalDTO, *common.Response) error
+	GetListByIds(context.Context, *IdsDto, *common.Response) error
 }
 
 func RegisterDealerHandler(s server.Server, hdlr DealerHandler, opts ...server.HandlerOption) error {
@@ -142,6 +154,7 @@ func RegisterDealerHandler(s server.Server, hdlr DealerHandler, opts ...server.H
 		List(ctx context.Context, in *common.Page, out *common.Response) error
 		SyncDealer(ctx context.Context, in *common.Page, out *common.Response) error
 		Get(ctx context.Context, in *common.IdLocalDTO, out *common.Response) error
+		GetListByIds(ctx context.Context, in *IdsDto, out *common.Response) error
 	}
 	type Dealer struct {
 		dealer
@@ -176,4 +189,8 @@ func (h *dealerHandler) SyncDealer(ctx context.Context, in *common.Page, out *co
 
 func (h *dealerHandler) Get(ctx context.Context, in *common.IdLocalDTO, out *common.Response) error {
 	return h.DealerHandler.Get(ctx, in, out)
+}
+
+func (h *dealerHandler) GetListByIds(ctx context.Context, in *IdsDto, out *common.Response) error {
+	return h.DealerHandler.GetListByIds(ctx, in, out)
 }

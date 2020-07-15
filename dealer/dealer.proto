@@ -15,6 +15,9 @@ service Dealer {
   rpc GetListByIds(IdsDto) returns (common.Response) {}
 }
 
+message DealersDto{
+  repeated DealerDto dealersDto = 1;
+}
 
 message DealerDto{
   uint64 Id = 1;

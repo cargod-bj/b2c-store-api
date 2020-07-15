@@ -12,6 +12,7 @@ service Dealer {
   rpc List(common.Page) returns (common.Response) {}
   rpc SyncDealer(common.Page) returns (common.Response) {}
   rpc Get(common.IdLocalDTO) returns (common.Response) {}
+  rpc GetListByIds(IdsDto) returns (common.Response) {}
 }
 
 
@@ -60,4 +61,7 @@ message SyncDealerData{
   string DealerId = 2;
   uint32 DealershipType = 3;
   string Name = 5;
+}
+message IdsDto {
+  repeated uint64 id = 1;
 }

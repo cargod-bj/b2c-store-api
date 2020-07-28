@@ -51,6 +51,7 @@ message StoreDTO {
   uint32 type = 16;
   string state = 17;
   string mapUrl = 18;
+  string managerName = 19;
 }
 
 message StoreListDTO {

@@ -50,7 +50,6 @@ message StoreDTO {
   string testDriverServiceHours = 15;
   uint32 type = 16;
   string state = 17;
-  string mapUrl = 18;
   string managerName = 19;
   string addressUrl = 20;
 }

@@ -52,6 +52,7 @@ message StoreDTO {
   string state = 17;
   string managerName = 19;
   string addressUrl = 20;
+  int64  openDay = 21;
 }
 
 message StoreListDTO {
@@ -78,6 +79,7 @@ message StoreListDTO {
   string managerName = 21;
   string dealershipName = 23;
   string addressUrl = 24;
+  int64  openDay = 25;
 }
 
 // store的简单信息dto

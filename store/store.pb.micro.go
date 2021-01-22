@@ -56,7 +56,7 @@ type StoreService interface {
 	//查询storename以及address
 	ListLocation(ctx context.Context, in *IdsDto, opts ...client.CallOption) (*common.Response, error)
 	//查询商家禁止时间
-	ListStoreInvalidTimeDTO(ctx context.Context, in *IdsDto, opts ...client.CallOption) (*common.Response, error)
+	ListStoreInvalidTimeDTO(ctx context.Context, in *common.IdDto, opts ...client.CallOption) (*common.Response, error)
 	//新增或者修改
 	AddOrUpdate(ctx context.Context, in *StoreInvalidTimeDTO, opts ...client.CallOption) (*common.Response, error)
 }
@@ -143,7 +143,7 @@ func (c *storeService) ListLocation(ctx context.Context, in *IdsDto, opts ...cli
 	return out, nil
 }
 
-func (c *storeService) ListStoreInvalidTimeDTO(ctx context.Context, in *IdsDto, opts ...client.CallOption) (*common.Response, error) {
+func (c *storeService) ListStoreInvalidTimeDTO(ctx context.Context, in *common.IdDto, opts ...client.CallOption) (*common.Response, error) {
 	req := c.c.NewRequest(c.name, "Store.ListStoreInvalidTimeDTO", in)
 	out := new(common.Response)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -179,7 +179,7 @@ type StoreHandler interface {
 	//查询storename以及address
 	ListLocation(context.Context, *IdsDto, *common.Response) error
 	//查询商家禁止时间
-	ListStoreInvalidTimeDTO(context.Context, *IdsDto, *common.Response) error
+	ListStoreInvalidTimeDTO(context.Context, *common.IdDto, *common.Response) error
 	//新增或者修改
 	AddOrUpdate(context.Context, *StoreInvalidTimeDTO, *common.Response) error
 }
@@ -193,7 +193,7 @@ func RegisterStoreHandler(s server.Server, hdlr StoreHandler, opts ...server.Han
 		Get(ctx context.Context, in *common.IdDto, out *common.Response) error
 		ListSimpleInfoByIds(ctx context.Context, in *IdsDto, out *common.Response) error
 		ListLocation(ctx context.Context, in *IdsDto, out *common.Response) error
-		ListStoreInvalidTimeDTO(ctx context.Context, in *IdsDto, out *common.Response) error
+		ListStoreInvalidTimeDTO(ctx context.Context, in *common.IdDto, out *common.Response) error
 		AddOrUpdate(ctx context.Context, in *StoreInvalidTimeDTO, out *common.Response) error
 	}
 	type Store struct {
@@ -235,7 +235,7 @@ func (h *storeHandler) ListLocation(ctx context.Context, in *IdsDto, out *common
 	return h.StoreHandler.ListLocation(ctx, in, out)
 }
 
-func (h *storeHandler) ListStoreInvalidTimeDTO(ctx context.Context, in *IdsDto, out *common.Response) error {
+func (h *storeHandler) ListStoreInvalidTimeDTO(ctx context.Context, in *common.IdDto, out *common.Response) error {
 	return h.StoreHandler.ListStoreInvalidTimeDTO(ctx, in, out)
 }
 

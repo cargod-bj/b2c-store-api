@@ -21,6 +21,19 @@ service Store {
   rpc ListSimpleInfoByIds(IdsDto) returns (common.Response) {}
   //查询storename以及address
   rpc ListLocation(IdsDto) returns (common.Response) {}
+  //查询商家禁止时间
+  rpc ListStoreInvalidTimeDTO(IdsDto) returns (common.Response) {}
+  //新增或者修改
+  rpc AddOrUpdate(StoreInvalidTimeDTO) returns (common.Response) {}
+}
+
+message StoreInvalidTimeDTO {
+  uint64 id = 1;
+  uint64 storeId = 2;
+  int64 day = 3;
+  uint32 status = 4;
+  int64  createTime = 5;
+  int64  updateTime = 6;
 }
 
 message IdDTO {

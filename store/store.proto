@@ -35,7 +35,7 @@ message StoreInvalidTimeDTO {
   uint64 id = 1;
   uint64 storeId = 2;
   int64 day = 3;
-  uint32 status = 4;
+  uint32 type = 4;
   int64  createTime = 5;
   int64  updateTime = 6;
 }

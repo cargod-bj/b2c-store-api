@@ -26,6 +26,10 @@ service Store {
   //新增或者修改
   rpc AddOrUpdate(StoreInvalidTimeDTO) returns (common.Response) {}
 }
+message StoreInvalidTimeDTOList {
+  repeated StoreInvalidTimeDTO StoreInvalidTimeDTOs  = 1;
+}
+
 
 message StoreInvalidTimeDTO {
   uint64 id = 1;

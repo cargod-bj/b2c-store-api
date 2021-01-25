@@ -11,6 +11,8 @@ service Area {
   rpc Update(AreaDto) returns (common.Response) {}
   rpc TopList(common.LocalDto) returns (common.Response) {}
   rpc ChildList(ParentCode) returns (common.Response) {}
+  // 根据指定state和area批量获取相关数据，返回数据StateAndAreaList
+  rpc GetStateAndAreaByCodes(StateAndAreaCodeReq) returns (common.Response) {}
 }
 
 
@@ -29,4 +31,14 @@ message AreaDto{
 
 message AreaList{
   repeated AreaDto areaDTOs = 1;
+}
+
+message StateAndAreaList{
+  map<string, AreaDto> stateMap = 1;
+  map<string, AreaDto> areaMap = 2;
+}
+
+message StateAndAreaCodeReq{
+  repeated string stateCodes = 1;
+  repeated string areaCodes = 2;
 }

@@ -48,6 +48,8 @@ type AreaService interface {
 	Update(ctx context.Context, in *AreaDto, opts ...client.CallOption) (*common.Response, error)
 	TopList(ctx context.Context, in *common.LocalDto, opts ...client.CallOption) (*common.Response, error)
 	ChildList(ctx context.Context, in *ParentCode, opts ...client.CallOption) (*common.Response, error)
+	// 根据指定state和area批量获取相关数据，返回数据StateAndAreaList
+	GetStateAndAreaByCodes(ctx context.Context, in *StateAndAreaCodeReq, opts ...client.CallOption) (*common.Response, error)
 }
 
 type areaService struct {
@@ -112,6 +114,16 @@ func (c *areaService) ChildList(ctx context.Context, in *ParentCode, opts ...cli
 	return out, nil
 }
 
+func (c *areaService) GetStateAndAreaByCodes(ctx context.Context, in *StateAndAreaCodeReq, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Area.GetStateAndAreaByCodes", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for Area service
 
 type AreaHandler interface {
@@ -120,6 +132,8 @@ type AreaHandler interface {
 	Update(context.Context, *AreaDto, *common.Response) error
 	TopList(context.Context, *common.LocalDto, *common.Response) error
 	ChildList(context.Context, *ParentCode, *common.Response) error
+	// 根据指定state和area批量获取相关数据，返回数据StateAndAreaList
+	GetStateAndAreaByCodes(context.Context, *StateAndAreaCodeReq, *common.Response) error
 }
 
 func RegisterAreaHandler(s server.Server, hdlr AreaHandler, opts ...server.HandlerOption) error {
@@ -129,6 +143,7 @@ func RegisterAreaHandler(s server.Server, hdlr AreaHandler, opts ...server.Handl
 		Update(ctx context.Context, in *AreaDto, out *common.Response) error
 		TopList(ctx context.Context, in *common.LocalDto, out *common.Response) error
 		ChildList(ctx context.Context, in *ParentCode, out *common.Response) error
+		GetStateAndAreaByCodes(ctx context.Context, in *StateAndAreaCodeReq, out *common.Response) error
 	}
 	type Area struct {
 		area
@@ -159,4 +174,8 @@ func (h *areaHandler) TopList(ctx context.Context, in *common.LocalDto, out *com
 
 func (h *areaHandler) ChildList(ctx context.Context, in *ParentCode, out *common.Response) error {
 	return h.AreaHandler.ChildList(ctx, in, out)
+}
+
+func (h *areaHandler) GetStateAndAreaByCodes(ctx context.Context, in *StateAndAreaCodeReq, out *common.Response) error {
+	return h.AreaHandler.GetStateAndAreaByCodes(ctx, in, out)
 }

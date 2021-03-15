@@ -8,7 +8,7 @@ import (
 	common "github.com/cargod-bj/b2c-proto-common/common"
 	store "github.com/cargod-bj/b2c-store-api/store"
 	proto "github.com/golang/protobuf/proto"
-	_ "github.com/golang/protobuf/ptypes/any"
+	_ "google.golang.org/protobuf/types/known/anypb"
 	math "math"
 )
 

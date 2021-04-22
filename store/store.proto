@@ -54,6 +54,7 @@ message IdsDto {
 // 指定的一组ids
 message DateList {
   repeated string dateList = 1;
+  bool isForced = 2;
 }
 
 message StoreDTO {

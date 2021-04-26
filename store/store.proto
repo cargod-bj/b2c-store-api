@@ -78,6 +78,9 @@ message StoreDTO {
   string managerName = 19;
   string addressUrl = 20;
   int64  openDay = 21;
+  int64 testDriverWarningWorkingNumber = 22;
+  int64 testDriverWarningWeekendNumber = 23;
+  int64 otherHolidays = 24;
 }
 
 message StoreListDTO {

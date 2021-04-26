@@ -59,8 +59,10 @@ type StoreService interface {
 	ListStoreInvalidTimeDTO(ctx context.Context, in *common.IdDto, opts ...client.CallOption) (*common.Response, error)
 	//新增或者修改
 	AddOrUpdate(ctx context.Context, in *StoreInvalidTimeDTO, opts ...client.CallOption) (*common.Response, error)
-	//新增或者修改
+	//生成timeslot redis缓存
 	GenTimeSlotCache(ctx context.Context, in *DateList, opts ...client.CallOption) (*common.Response, error)
+	//获取 timeslot  列表
+	GetTimeSlotCache(ctx context.Context, in *GetTimeSlotCon, opts ...client.CallOption) (*common.Response, error)
 }
 
 type storeService struct {
@@ -175,6 +177,16 @@ func (c *storeService) GenTimeSlotCache(ctx context.Context, in *DateList, opts 
 	return out, nil
 }
 
+func (c *storeService) GetTimeSlotCache(ctx context.Context, in *GetTimeSlotCon, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Store.GetTimeSlotCache", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for Store service
 
 type StoreHandler interface {
@@ -194,8 +206,10 @@ type StoreHandler interface {
 	ListStoreInvalidTimeDTO(context.Context, *common.IdDto, *common.Response) error
 	//新增或者修改
 	AddOrUpdate(context.Context, *StoreInvalidTimeDTO, *common.Response) error
-	//新增或者修改
+	//生成timeslot redis缓存
 	GenTimeSlotCache(context.Context, *DateList, *common.Response) error
+	//获取 timeslot  列表
+	GetTimeSlotCache(context.Context, *GetTimeSlotCon, *common.Response) error
 }
 
 func RegisterStoreHandler(s server.Server, hdlr StoreHandler, opts ...server.HandlerOption) error {
@@ -210,6 +224,7 @@ func RegisterStoreHandler(s server.Server, hdlr StoreHandler, opts ...server.Han
 		ListStoreInvalidTimeDTO(ctx context.Context, in *common.IdDto, out *common.Response) error
 		AddOrUpdate(ctx context.Context, in *StoreInvalidTimeDTO, out *common.Response) error
 		GenTimeSlotCache(ctx context.Context, in *DateList, out *common.Response) error
+		GetTimeSlotCache(ctx context.Context, in *GetTimeSlotCon, out *common.Response) error
 	}
 	type Store struct {
 		store
@@ -260,4 +275,8 @@ func (h *storeHandler) AddOrUpdate(ctx context.Context, in *StoreInvalidTimeDTO,
 
 func (h *storeHandler) GenTimeSlotCache(ctx context.Context, in *DateList, out *common.Response) error {
 	return h.StoreHandler.GenTimeSlotCache(ctx, in, out)
+}
+
+func (h *storeHandler) GetTimeSlotCache(ctx context.Context, in *GetTimeSlotCon, out *common.Response) error {
+	return h.StoreHandler.GetTimeSlotCache(ctx, in, out)
 }

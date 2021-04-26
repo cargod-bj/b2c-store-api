@@ -25,11 +25,11 @@ service Store {
   rpc ListStoreInvalidTimeDTO(common.IdDto) returns (common.Response) {}
   //新增或者修改
   rpc AddOrUpdate(StoreInvalidTimeDTO) returns (common.Response) {}
-   //新增或者修改
+  //新增或者修改
   rpc GenTimeSlotCache(DateList) returns (common.Response) {}
 }
 message StoreInvalidTimeDTOList {
-  repeated StoreInvalidTimeDTO StoreInvalidTimeDTOs  = 1;
+  repeated StoreInvalidTimeDTO StoreInvalidTimeDTOs = 1;
 }
 
 
@@ -78,6 +78,9 @@ message StoreDTO {
   string managerName = 19;
   string addressUrl = 20;
   int64  openDay = 21;
+  int64 testDriverWarningWorkingNumber = 22;
+  int64 testDriverWarningWeekendNumber = 23;
+  int64 otherHolidays = 24;
 }
 
 message StoreListDTO {

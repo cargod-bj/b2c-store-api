@@ -80,7 +80,7 @@ message StoreDTO {
   int64  openDay = 21;
   int64 testDriverWarningWorkingNumber = 22;
   int64 testDriverWarningWeekendNumber = 23;
-  int64 otherHolidays = 24;
+  string otherHolidays = 24;
 }
 
 message StoreListDTO {
@@ -110,7 +110,7 @@ message StoreListDTO {
   int64  openDay = 25;
   int64 testDriverWarningWorkingNumber = 26;
   int64 testDriverWarningWeekendNumber = 27;
-  int64 otherHolidays = 28;
+  string otherHolidays = 28;
 }
 
 // store的简单信息dto

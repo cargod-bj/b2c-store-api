@@ -27,6 +27,8 @@ service Store {
   rpc AddOrUpdate(StoreInvalidTimeDTO) returns (common.Response) {}
   //新增或者修改
   rpc GenTimeSlotCache(DateList) returns (common.Response) {}
+  //获取 timeslot  列表
+  rpc GetTimeSlotCache(GetTimeSlotCon) returns (common.Response) {}
 }
 message StoreInvalidTimeDTOList {
   repeated StoreInvalidTimeDTO StoreInvalidTimeDTOs = 1;
@@ -52,7 +54,7 @@ message IdsDto {
   repeated uint64 ids = 1;
 }
 
-// 指定的一组ids
+// 生成timeslot参数
 message DateList {
   repeated string dateList = 1;
   bool isForced = 2;
@@ -126,5 +128,19 @@ message StoreCondition{
   uint64 dealerId = 3;
   uint32 dealerType = 4;
 }
+//获取timeslot条件
+message GetTimeSlotCon {
+  string date = 1;
+  uint64 storeId = 2;
+}
+//timeslot 信息列表
+message TimeSlotList {
+  repeated TimeSlotEle list = 1;
+}
 
+message TimeSlotEle {
+  int64 beginTime = 1;
+  int64 endTime   = 2;
+  int32 status    = 3;
+}
 

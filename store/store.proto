@@ -25,21 +25,22 @@ service Store {
   rpc ListStoreInvalidTimeDTO(common.IdDto) returns (common.Response) {}
   //新增或者修改
   rpc AddOrUpdate(StoreInvalidTimeDTO) returns (common.Response) {}
-   //新增或者修改
+  //新增或者修改
   rpc GenTimeSlotCache(DateList) returns (common.Response) {}
 }
 message StoreInvalidTimeDTOList {
-  repeated StoreInvalidTimeDTO StoreInvalidTimeDTOs  = 1;
+  repeated StoreInvalidTimeDTO StoreInvalidTimeDTOs = 1;
 }
 
 
 message StoreInvalidTimeDTO {
   uint64 id = 1;
   uint64 storeId = 2;
-  int64 day = 3;
+  int64 beginTime = 3;
   uint32 type = 4;
   int64  createTime = 5;
   int64  updateTime = 6;
+  int64 endTime = 7;
 }
 
 message IdDTO {

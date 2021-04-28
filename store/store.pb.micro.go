@@ -63,6 +63,8 @@ type StoreService interface {
 	GenTimeSlotCache(ctx context.Context, in *DateList, opts ...client.CallOption) (*common.Response, error)
 	//获取 timeslot  列表
 	GetTimeSlotCache(ctx context.Context, in *GetTimeSlotCon, opts ...client.CallOption) (*common.Response, error)
+	//获取 timeslot  列表
+	AddAppointmentNum(ctx context.Context, in *AddAppointmentCon, opts ...client.CallOption) (*common.Response, error)
 }
 
 type storeService struct {
@@ -187,6 +189,16 @@ func (c *storeService) GetTimeSlotCache(ctx context.Context, in *GetTimeSlotCon,
 	return out, nil
 }
 
+func (c *storeService) AddAppointmentNum(ctx context.Context, in *AddAppointmentCon, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Store.AddAppointmentNum", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for Store service
 
 type StoreHandler interface {
@@ -210,6 +222,8 @@ type StoreHandler interface {
 	GenTimeSlotCache(context.Context, *DateList, *common.Response) error
 	//获取 timeslot  列表
 	GetTimeSlotCache(context.Context, *GetTimeSlotCon, *common.Response) error
+	//获取 timeslot  列表
+	AddAppointmentNum(context.Context, *AddAppointmentCon, *common.Response) error
 }
 
 func RegisterStoreHandler(s server.Server, hdlr StoreHandler, opts ...server.HandlerOption) error {
@@ -225,6 +239,7 @@ func RegisterStoreHandler(s server.Server, hdlr StoreHandler, opts ...server.Han
 		AddOrUpdate(ctx context.Context, in *StoreInvalidTimeDTO, out *common.Response) error
 		GenTimeSlotCache(ctx context.Context, in *DateList, out *common.Response) error
 		GetTimeSlotCache(ctx context.Context, in *GetTimeSlotCon, out *common.Response) error
+		AddAppointmentNum(ctx context.Context, in *AddAppointmentCon, out *common.Response) error
 	}
 	type Store struct {
 		store
@@ -279,4 +294,8 @@ func (h *storeHandler) GenTimeSlotCache(ctx context.Context, in *DateList, out *
 
 func (h *storeHandler) GetTimeSlotCache(ctx context.Context, in *GetTimeSlotCon, out *common.Response) error {
 	return h.StoreHandler.GetTimeSlotCache(ctx, in, out)
+}
+
+func (h *storeHandler) AddAppointmentNum(ctx context.Context, in *AddAppointmentCon, out *common.Response) error {
+	return h.StoreHandler.AddAppointmentNum(ctx, in, out)
 }

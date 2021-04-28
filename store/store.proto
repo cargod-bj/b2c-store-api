@@ -29,6 +29,8 @@ service Store {
   rpc GenTimeSlotCache(DateList) returns (common.Response) {}
   //获取 timeslot  列表
   rpc GetTimeSlotCache(GetTimeSlotCon) returns (common.Response) {}
+  //获取 timeslot  列表
+  rpc AddAppointmentNum(AddAppointmentCon) returns (common.Response) {}
 }
 message StoreInvalidTimeDTOList {
   repeated StoreInvalidTimeDTO StoreInvalidTimeDTOs = 1;
@@ -143,5 +145,12 @@ message TimeSlotEle {
   int64 endTime   = 2;
   int32 status    = 3;
   int64 count     = 4;
+}
+
+message AddAppointmentCon {
+     uint64 storeId = 1;
+     int64 beginTime = 2;
+     int64 endTime   = 3;
+     uint64 userId  = 4;
 }
 

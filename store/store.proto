@@ -31,6 +31,8 @@ service Store {
   rpc GenTimeSlotCache(DateList) returns (common.Response) {}
   //获取 timeslot  列表
   rpc GetTimeSlotCache(GetTimeSlotCon) returns (common.Response) {}
+  //获取 timeslot All 列表
+  rpc GetTimeSlotCacheAll(GetTimeSlotCon) returns (common.Response) {}
   //获取 timeslot  列表
   rpc AddAppointmentNum(AddAppointmentCon) returns (common.Response) {}
 }

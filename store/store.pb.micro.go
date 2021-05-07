@@ -67,8 +67,10 @@ type StoreService interface {
 	GetTimeSlotCache(ctx context.Context, in *GetTimeSlotCon, opts ...client.CallOption) (*common.Response, error)
 	//获取 timeslot All 列表
 	GetTimeSlotCacheAll(ctx context.Context, in *GetTimeSlotCon, opts ...client.CallOption) (*common.Response, error)
-	//获取 timeslot  列表
+	//添加修改预约人数
 	AddAppointmentNum(ctx context.Context, in *AddAppointmentCon, opts ...client.CallOption) (*common.Response, error)
+	//获取 timeslot 列表状态
+	GetTimeSlotStatusList(ctx context.Context, in *TimeSlotStatus, opts ...client.CallOption) (*common.Response, error)
 }
 
 type storeService struct {
@@ -223,6 +225,16 @@ func (c *storeService) AddAppointmentNum(ctx context.Context, in *AddAppointment
 	return out, nil
 }
 
+func (c *storeService) GetTimeSlotStatusList(ctx context.Context, in *TimeSlotStatus, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Store.GetTimeSlotStatusList", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for Store service
 
 type StoreHandler interface {
@@ -250,8 +262,10 @@ type StoreHandler interface {
 	GetTimeSlotCache(context.Context, *GetTimeSlotCon, *common.Response) error
 	//获取 timeslot All 列表
 	GetTimeSlotCacheAll(context.Context, *GetTimeSlotCon, *common.Response) error
-	//获取 timeslot  列表
+	//添加修改预约人数
 	AddAppointmentNum(context.Context, *AddAppointmentCon, *common.Response) error
+	//获取 timeslot 列表状态
+	GetTimeSlotStatusList(context.Context, *TimeSlotStatus, *common.Response) error
 }
 
 func RegisterStoreHandler(s server.Server, hdlr StoreHandler, opts ...server.HandlerOption) error {
@@ -270,6 +284,7 @@ func RegisterStoreHandler(s server.Server, hdlr StoreHandler, opts ...server.Han
 		GetTimeSlotCache(ctx context.Context, in *GetTimeSlotCon, out *common.Response) error
 		GetTimeSlotCacheAll(ctx context.Context, in *GetTimeSlotCon, out *common.Response) error
 		AddAppointmentNum(ctx context.Context, in *AddAppointmentCon, out *common.Response) error
+		GetTimeSlotStatusList(ctx context.Context, in *TimeSlotStatus, out *common.Response) error
 	}
 	type Store struct {
 		store
@@ -336,4 +351,8 @@ func (h *storeHandler) GetTimeSlotCacheAll(ctx context.Context, in *GetTimeSlotC
 
 func (h *storeHandler) AddAppointmentNum(ctx context.Context, in *AddAppointmentCon, out *common.Response) error {
 	return h.StoreHandler.AddAppointmentNum(ctx, in, out)
+}
+
+func (h *storeHandler) GetTimeSlotStatusList(ctx context.Context, in *TimeSlotStatus, out *common.Response) error {
+	return h.StoreHandler.GetTimeSlotStatusList(ctx, in, out)
 }

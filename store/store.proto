@@ -33,8 +33,10 @@ service Store {
   rpc GetTimeSlotCache(GetTimeSlotCon) returns (common.Response) {}
   //获取 timeslot All 列表
   rpc GetTimeSlotCacheAll(GetTimeSlotCon) returns (common.Response) {}
-  //获取 timeslot  列表
+  //添加修改预约人数
   rpc AddAppointmentNum(AddAppointmentCon) returns (common.Response) {}
+  //获取 timeslot 列表状态
+  rpc GetTimeSlotStatusList(TimeSlotStatus) returns(common.Response){}
 }
 message StoreInvalidTimeDTOList {
   repeated StoreInvalidTimeDTO StoreInvalidTimeDTOs = 1;
@@ -163,5 +165,12 @@ message AddAppointmentCon {
 message StoreInvalidTime{
   common.Page page = 1;
   uint64 id = 2;
+}
+
+message TimeSlotStatus{
+  uint64 id = 1;
+  repeated int64 beginTimeList = 2;
+  repeated int64 endTimeList = 3;
+  uint32 type = 4;
 }
 

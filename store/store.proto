@@ -22,7 +22,7 @@ service Store {
   //查询storename以及address
   rpc ListLocation(IdsDto) returns (common.Response) {}
   //查询商家禁止时间
-  rpc ListStoreInvalidTimeDTO(common.IdDto) returns (common.Response) {}
+  rpc ListStoreInvalidTimeDTO(StoreInvalidTime) returns (common.Response) {}
   //新增或者修改
   rpc AddOrUpdate(StoreInvalidTimeDTO) returns (common.Response) {}
   //批量新增或者修改
@@ -134,11 +134,13 @@ message StoreCondition{
   uint64 dealerId = 3;
   uint32 dealerType = 4;
 }
+
 //获取timeslot条件
 message GetTimeSlotCon {
   string date = 1;
   uint64 storeId = 2;
 }
+
 //timeslot 信息列表
 message TimeSlotList {
   repeated TimeSlotEle list = 1;
@@ -146,15 +148,20 @@ message TimeSlotList {
 
 message TimeSlotEle {
   int64 beginTime = 1;
-  int64 endTime   = 2;
-  int32 status    = 3;
-  int64 count     = 4;
+  int64 endTime = 2;
+  int32 status = 3;
+  int64 count = 4;
 }
 
 message AddAppointmentCon {
-     uint64 storeId = 1;
-     int64 beginTime = 2;
-     int64 endTime   = 3;
-     uint64 userId  = 4;
+  uint64 storeId = 1;
+  int64 beginTime = 2;
+  int64 endTime = 3;
+  uint64 userId = 4;
+}
+
+message StoreInvalidTime{
+  common.Page page = 1;
+  uint64 id = 2;
 }
 

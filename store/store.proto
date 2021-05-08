@@ -169,8 +169,7 @@ message StoreInvalidTime{
 
 message TimeSlotStatus{
   uint64 id = 1;
-  repeated int64 beginTimeList = 2;
-  repeated int64 endTimeList = 3;
+  string date = 2;
+  string testDriveServiceHours = 3;
   uint32 type = 4;
 }
-

@@ -70,7 +70,7 @@ type StoreService interface {
 	//添加修改预约人数
 	AddAppointmentNum(ctx context.Context, in *AddAppointmentCon, opts ...client.CallOption) (*common.Response, error)
 	//获取 timeslot 列表状态
-	GetTimeSlotStatusList(ctx context.Context, in *TimeSlotStatus, opts ...client.CallOption) (*common.Response, error)
+	GetTimeSlotStatusList(ctx context.Context, in *TimeSlotStatusReq, opts ...client.CallOption) (*common.Response, error)
 }
 
 type storeService struct {
@@ -225,7 +225,7 @@ func (c *storeService) AddAppointmentNum(ctx context.Context, in *AddAppointment
 	return out, nil
 }
 
-func (c *storeService) GetTimeSlotStatusList(ctx context.Context, in *TimeSlotStatus, opts ...client.CallOption) (*common.Response, error) {
+func (c *storeService) GetTimeSlotStatusList(ctx context.Context, in *TimeSlotStatusReq, opts ...client.CallOption) (*common.Response, error) {
 	req := c.c.NewRequest(c.name, "Store.GetTimeSlotStatusList", in)
 	out := new(common.Response)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -265,7 +265,7 @@ type StoreHandler interface {
 	//添加修改预约人数
 	AddAppointmentNum(context.Context, *AddAppointmentCon, *common.Response) error
 	//获取 timeslot 列表状态
-	GetTimeSlotStatusList(context.Context, *TimeSlotStatus, *common.Response) error
+	GetTimeSlotStatusList(context.Context, *TimeSlotStatusReq, *common.Response) error
 }
 
 func RegisterStoreHandler(s server.Server, hdlr StoreHandler, opts ...server.HandlerOption) error {
@@ -284,7 +284,7 @@ func RegisterStoreHandler(s server.Server, hdlr StoreHandler, opts ...server.Han
 		GetTimeSlotCache(ctx context.Context, in *GetTimeSlotCon, out *common.Response) error
 		GetTimeSlotCacheAll(ctx context.Context, in *GetTimeSlotCon, out *common.Response) error
 		AddAppointmentNum(ctx context.Context, in *AddAppointmentCon, out *common.Response) error
-		GetTimeSlotStatusList(ctx context.Context, in *TimeSlotStatus, out *common.Response) error
+		GetTimeSlotStatusList(ctx context.Context, in *TimeSlotStatusReq, out *common.Response) error
 	}
 	type Store struct {
 		store
@@ -353,6 +353,6 @@ func (h *storeHandler) AddAppointmentNum(ctx context.Context, in *AddAppointment
 	return h.StoreHandler.AddAppointmentNum(ctx, in, out)
 }
 
-func (h *storeHandler) GetTimeSlotStatusList(ctx context.Context, in *TimeSlotStatus, out *common.Response) error {
+func (h *storeHandler) GetTimeSlotStatusList(ctx context.Context, in *TimeSlotStatusReq, out *common.Response) error {
 	return h.StoreHandler.GetTimeSlotStatusList(ctx, in, out)
 }

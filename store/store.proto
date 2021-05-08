@@ -36,7 +36,7 @@ service Store {
   //添加修改预约人数
   rpc AddAppointmentNum(AddAppointmentCon) returns (common.Response) {}
   //获取 timeslot 列表状态
-  rpc GetTimeSlotStatusList(TimeSlotStatus) returns(common.Response){}
+  rpc GetTimeSlotStatusList(TimeSlotStatusReq) returns(common.Response){}
 }
 message StoreInvalidTimeDTOList {
   repeated StoreInvalidTimeDTO StoreInvalidTimeDTOs = 1;
@@ -167,9 +167,16 @@ message StoreInvalidTime{
   uint64 id = 2;
 }
 
-message TimeSlotStatus{
+message TimeSlotStatusReq{
   uint64 id = 1;
   string date = 2;
   string testDriveServiceHours = 3;
   uint32 type = 4;
+}
+
+message TimeSlotStatusResp {
+  int64 beginTime = 1;
+  int64 endTime = 2;
+  int32 status = 3;
+  int64 invalidTime = 4;
 }

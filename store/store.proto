@@ -178,5 +178,5 @@ message TimeSlotStatusResp {
   int64 beginTime = 1;
   int64 endTime = 2;
   int32 status = 3;
-  int64 invalidTimeId = 4;
+  uint64 invalidTimeId = 4;
 }

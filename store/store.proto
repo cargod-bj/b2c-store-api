@@ -40,6 +40,8 @@ service Store {
 }
 message StoreInvalidTimeDTOList {
   repeated StoreInvalidTimeDTO StoreInvalidTimeDTOs = 1;
+  TimeSlotEle TimeSlotCache = 2;
+  uint64 storeId = 3;
 }
 
 

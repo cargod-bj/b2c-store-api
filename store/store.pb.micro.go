@@ -71,6 +71,8 @@ type StoreService interface {
 	AddAppointmentNum(ctx context.Context, in *AddAppointmentCon, opts ...client.CallOption) (*common.Response, error)
 	//获取 timeslot 列表状态
 	GetTimeSlotStatusList(ctx context.Context, in *TimeSlotStatusReq, opts ...client.CallOption) (*common.Response, error)
+	//根据商店Id删除禁用时间
+	DeleteStoreInvalidTimeByStoreId(ctx context.Context, in *common.IdDto, opts ...client.CallOption) (*common.Response, error)
 }
 
 type storeService struct {
@@ -235,6 +237,16 @@ func (c *storeService) GetTimeSlotStatusList(ctx context.Context, in *TimeSlotSt
 	return out, nil
 }
 
+func (c *storeService) DeleteStoreInvalidTimeByStoreId(ctx context.Context, in *common.IdDto, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Store.DeleteStoreInvalidTimeByStoreId", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for Store service
 
 type StoreHandler interface {
@@ -266,6 +278,8 @@ type StoreHandler interface {
 	AddAppointmentNum(context.Context, *AddAppointmentCon, *common.Response) error
 	//获取 timeslot 列表状态
 	GetTimeSlotStatusList(context.Context, *TimeSlotStatusReq, *common.Response) error
+	//根据商店Id删除禁用时间
+	DeleteStoreInvalidTimeByStoreId(context.Context, *common.IdDto, *common.Response) error
 }
 
 func RegisterStoreHandler(s server.Server, hdlr StoreHandler, opts ...server.HandlerOption) error {
@@ -285,6 +299,7 @@ func RegisterStoreHandler(s server.Server, hdlr StoreHandler, opts ...server.Han
 		GetTimeSlotCacheAll(ctx context.Context, in *GetTimeSlotCon, out *common.Response) error
 		AddAppointmentNum(ctx context.Context, in *AddAppointmentCon, out *common.Response) error
 		GetTimeSlotStatusList(ctx context.Context, in *TimeSlotStatusReq, out *common.Response) error
+		DeleteStoreInvalidTimeByStoreId(ctx context.Context, in *common.IdDto, out *common.Response) error
 	}
 	type Store struct {
 		store
@@ -355,4 +370,8 @@ func (h *storeHandler) AddAppointmentNum(ctx context.Context, in *AddAppointment
 
 func (h *storeHandler) GetTimeSlotStatusList(ctx context.Context, in *TimeSlotStatusReq, out *common.Response) error {
 	return h.StoreHandler.GetTimeSlotStatusList(ctx, in, out)
+}
+
+func (h *storeHandler) DeleteStoreInvalidTimeByStoreId(ctx context.Context, in *common.IdDto, out *common.Response) error {
+	return h.StoreHandler.DeleteStoreInvalidTimeByStoreId(ctx, in, out)
 }

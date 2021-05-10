@@ -37,6 +37,10 @@ service Store {
   rpc AddAppointmentNum(AddAppointmentCon) returns (common.Response) {}
   //获取 timeslot 列表状态
   rpc GetTimeSlotStatusList(TimeSlotStatusReq) returns(common.Response){}
+  //根据商店Id删除禁用时间
+  rpc DeleteStoreInvalidTime(IdsDto) returns (common.Response) {}
+  //查询商家禁止时间
+  rpc ListStoreInvalidTime(StoreInvalidTimeDTO) returns (common.Response) {}
 }
 message StoreInvalidTimeDTOList {
   repeated StoreInvalidTimeDTO StoreInvalidTimeDTOs = 1;
@@ -182,3 +186,4 @@ message TimeSlotStatusResp {
   int32 status = 3;
   uint64 invalidTimeId = 4;
 }
+

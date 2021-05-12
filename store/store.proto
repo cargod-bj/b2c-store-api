@@ -38,7 +38,7 @@ service Store {
   //获取 timeslot 列表状态
   rpc GetTimeSlotStatusList(TimeSlotStatusReq) returns(common.Response){}
   //根据商店Id删除禁用时间
-  rpc DeleteStoreInvalidTime(IdsDto) returns (common.Response) {}
+  rpc DeleteStoreInvalidTime(StoreInvalidTimeDTO) returns (common.Response) {}
   //查询商家禁止时间
   rpc ListStoreInvalidTime(StoreInvalidTimeDTO) returns (common.Response) {}
 }

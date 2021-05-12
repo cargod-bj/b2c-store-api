@@ -71,8 +71,10 @@ type StoreService interface {
 	AddAppointmentNum(ctx context.Context, in *AddAppointmentCon, opts ...client.CallOption) (*common.Response, error)
 	//获取 timeslot 列表状态
 	GetTimeSlotStatusList(ctx context.Context, in *TimeSlotStatusReq, opts ...client.CallOption) (*common.Response, error)
-	//根据商店Id删除禁用时间
-	DeleteStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, opts ...client.CallOption) (*common.Response, error)
+	//根据商店Id删除歇业时间
+	DeleteStoreInvalidTime(ctx context.Context, in *IdsDto, opts ...client.CallOption) (*common.Response, error)
+	//清除Redis中的歇业时间
+	DeleteCacheStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, opts ...client.CallOption) (*common.Response, error)
 	//查询商家禁止时间
 	ListStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, opts ...client.CallOption) (*common.Response, error)
 }
@@ -239,8 +241,18 @@ func (c *storeService) GetTimeSlotStatusList(ctx context.Context, in *TimeSlotSt
 	return out, nil
 }
 
-func (c *storeService) DeleteStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, opts ...client.CallOption) (*common.Response, error) {
+func (c *storeService) DeleteStoreInvalidTime(ctx context.Context, in *IdsDto, opts ...client.CallOption) (*common.Response, error) {
 	req := c.c.NewRequest(c.name, "Store.DeleteStoreInvalidTime", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storeService) DeleteCacheStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Store.DeleteCacheStoreInvalidTime", in)
 	out := new(common.Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -290,8 +302,10 @@ type StoreHandler interface {
 	AddAppointmentNum(context.Context, *AddAppointmentCon, *common.Response) error
 	//获取 timeslot 列表状态
 	GetTimeSlotStatusList(context.Context, *TimeSlotStatusReq, *common.Response) error
-	//根据商店Id删除禁用时间
-	DeleteStoreInvalidTime(context.Context, *StoreInvalidTimeDTO, *common.Response) error
+	//根据商店Id删除歇业时间
+	DeleteStoreInvalidTime(context.Context, *IdsDto, *common.Response) error
+	//清除Redis中的歇业时间
+	DeleteCacheStoreInvalidTime(context.Context, *StoreInvalidTimeDTO, *common.Response) error
 	//查询商家禁止时间
 	ListStoreInvalidTime(context.Context, *StoreInvalidTimeDTO, *common.Response) error
 }
@@ -313,7 +327,8 @@ func RegisterStoreHandler(s server.Server, hdlr StoreHandler, opts ...server.Han
 		GetTimeSlotCacheAll(ctx context.Context, in *GetTimeSlotCon, out *common.Response) error
 		AddAppointmentNum(ctx context.Context, in *AddAppointmentCon, out *common.Response) error
 		GetTimeSlotStatusList(ctx context.Context, in *TimeSlotStatusReq, out *common.Response) error
-		DeleteStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, out *common.Response) error
+		DeleteStoreInvalidTime(ctx context.Context, in *IdsDto, out *common.Response) error
+		DeleteCacheStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, out *common.Response) error
 		ListStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, out *common.Response) error
 	}
 	type Store struct {
@@ -387,8 +402,12 @@ func (h *storeHandler) GetTimeSlotStatusList(ctx context.Context, in *TimeSlotSt
 	return h.StoreHandler.GetTimeSlotStatusList(ctx, in, out)
 }
 
-func (h *storeHandler) DeleteStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, out *common.Response) error {
+func (h *storeHandler) DeleteStoreInvalidTime(ctx context.Context, in *IdsDto, out *common.Response) error {
 	return h.StoreHandler.DeleteStoreInvalidTime(ctx, in, out)
+}
+
+func (h *storeHandler) DeleteCacheStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, out *common.Response) error {
+	return h.StoreHandler.DeleteCacheStoreInvalidTime(ctx, in, out)
 }
 
 func (h *storeHandler) ListStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, out *common.Response) error {

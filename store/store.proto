@@ -37,8 +37,10 @@ service Store {
   rpc AddAppointmentNum(AddAppointmentCon) returns (common.Response) {}
   //获取 timeslot 列表状态
   rpc GetTimeSlotStatusList(TimeSlotStatusReq) returns(common.Response){}
-  //根据商店Id删除禁用时间
-  rpc DeleteStoreInvalidTime(StoreInvalidTimeDTO) returns (common.Response) {}
+  //根据商店Id删除歇业时间
+  rpc DeleteStoreInvalidTime(IdsDto) returns (common.Response) {}
+  //清除Redis中的歇业时间
+  rpc DeleteCacheStoreInvalidTime(StoreInvalidTimeDTO) returns (common.Response) {}
   //查询商家禁止时间
   rpc ListStoreInvalidTime(StoreInvalidTimeDTO) returns (common.Response) {}
 }

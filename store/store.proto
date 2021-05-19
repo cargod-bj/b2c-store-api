@@ -28,7 +28,7 @@ service Store {
   //批量新增或者修改
   rpc AddOrUpdateList(StoreInvalidTimeDTOList) returns (common.Response) {}
   //新增或者修改
-  rpc GenTimeSlotCache(DateList) returns (common.Response) {}
+  rpc GenTimeSlotCache(GenTimeSlotParam) returns (common.Response) {}
   //获取 timeslot  列表
   rpc GetTimeSlotCache(GetTimeSlotCon) returns (common.Response) {}
   //获取 timeslot All 列表
@@ -72,9 +72,10 @@ message IdsDto {
 }
 
 // 生成timeslot参数
-message DateList {
-  repeated string dateList = 1;
-  bool isForced = 2;
+message GenTimeSlotParam {
+  string startDay = 1;
+  uint64 days = 2;
+
 }
 
 message StoreDTO {

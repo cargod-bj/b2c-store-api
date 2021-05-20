@@ -25,7 +25,14 @@ service Store {
   rpc ListStoreInvalidTimeDTO(common.IdDto) returns (common.Response) {}
   //新增或者修改
   rpc AddOrUpdate(StoreInvalidTimeDTO) returns (common.Response) {}
+  //获取全部门店，支持car查询
+  rpc GetStoreALLForCarSearch(common.EmptyDto) returns (common.Response) {}
 }
+
+message StoreEntiretyDTO {
+  repeated StoreDTO StoreDTOS = 1;
+}
+
 message StoreInvalidTimeDTOList {
   repeated StoreInvalidTimeDTO StoreInvalidTimeDTOs  = 1;
 }

@@ -59,6 +59,8 @@ type StoreService interface {
 	ListStoreInvalidTimeDTO(ctx context.Context, in *common.IdDto, opts ...client.CallOption) (*common.Response, error)
 	//新增或者修改
 	AddOrUpdate(ctx context.Context, in *StoreInvalidTimeDTO, opts ...client.CallOption) (*common.Response, error)
+	//获取全部门店，支持car查询
+	GetStoreALLForCarSearch(ctx context.Context, in *common.EmptyDto, opts ...client.CallOption) (*common.Response, error)
 }
 
 type storeService struct {
@@ -163,6 +165,16 @@ func (c *storeService) AddOrUpdate(ctx context.Context, in *StoreInvalidTimeDTO,
 	return out, nil
 }
 
+func (c *storeService) GetStoreALLForCarSearch(ctx context.Context, in *common.EmptyDto, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Store.GetStoreALLForCarSearch", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for Store service
 
 type StoreHandler interface {
@@ -182,6 +194,8 @@ type StoreHandler interface {
 	ListStoreInvalidTimeDTO(context.Context, *common.IdDto, *common.Response) error
 	//新增或者修改
 	AddOrUpdate(context.Context, *StoreInvalidTimeDTO, *common.Response) error
+	//获取全部门店，支持car查询
+	GetStoreALLForCarSearch(context.Context, *common.EmptyDto, *common.Response) error
 }
 
 func RegisterStoreHandler(s server.Server, hdlr StoreHandler, opts ...server.HandlerOption) error {
@@ -195,6 +209,7 @@ func RegisterStoreHandler(s server.Server, hdlr StoreHandler, opts ...server.Han
 		ListLocation(ctx context.Context, in *IdsDto, out *common.Response) error
 		ListStoreInvalidTimeDTO(ctx context.Context, in *common.IdDto, out *common.Response) error
 		AddOrUpdate(ctx context.Context, in *StoreInvalidTimeDTO, out *common.Response) error
+		GetStoreALLForCarSearch(ctx context.Context, in *common.EmptyDto, out *common.Response) error
 	}
 	type Store struct {
 		store
@@ -241,4 +256,8 @@ func (h *storeHandler) ListStoreInvalidTimeDTO(ctx context.Context, in *common.I
 
 func (h *storeHandler) AddOrUpdate(ctx context.Context, in *StoreInvalidTimeDTO, out *common.Response) error {
 	return h.StoreHandler.AddOrUpdate(ctx, in, out)
+}
+
+func (h *storeHandler) GetStoreALLForCarSearch(ctx context.Context, in *common.EmptyDto, out *common.Response) error {
+	return h.StoreHandler.GetStoreALLForCarSearch(ctx, in, out)
 }

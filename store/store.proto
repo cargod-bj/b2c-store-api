@@ -35,6 +35,8 @@ service Store {
   rpc GetTimeSlotCacheAll(GetTimeSlotCon) returns (common.Response) {}
   //添加修改预约人数
   rpc AddAppointmentNum(AddAppointmentCon) returns (common.Response) {}
+  //减少预约人数
+  rpc MinusAppointmentNum(AddAppointmentCon) returns (common.Response) {}
   //获取 timeslot 列表状态
   rpc GetTimeSlotStatusList(TimeSlotStatusReq) returns(common.Response){}
   //根据商店Id删除歇业时间

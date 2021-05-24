@@ -82,7 +82,7 @@ type StoreService interface {
 	//创建全天歇业日期
 	CreateStoreInvalidDay(ctx context.Context, in *StoreInvalidDay, opts ...client.CallOption) (*common.Response, error)
 	//删除全天歇业日期
-	DeleteStoreInvalidDay(ctx context.Context, in *IdsDto, opts ...client.CallOption) (*common.Response, error)
+	DeleteStoreInvalidDay(ctx context.Context, in *IdDTO, opts ...client.CallOption) (*common.Response, error)
 	//根据日期获取某个商店的数据
 	GetStoreInvalidDayByDay(ctx context.Context, in *StoreInvalidDay, opts ...client.CallOption) (*common.Response, error)
 }
@@ -299,7 +299,7 @@ func (c *storeService) CreateStoreInvalidDay(ctx context.Context, in *StoreInval
 	return out, nil
 }
 
-func (c *storeService) DeleteStoreInvalidDay(ctx context.Context, in *IdsDto, opts ...client.CallOption) (*common.Response, error) {
+func (c *storeService) DeleteStoreInvalidDay(ctx context.Context, in *IdDTO, opts ...client.CallOption) (*common.Response, error) {
 	req := c.c.NewRequest(c.name, "Store.DeleteStoreInvalidDay", in)
 	out := new(common.Response)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -361,7 +361,7 @@ type StoreHandler interface {
 	//创建全天歇业日期
 	CreateStoreInvalidDay(context.Context, *StoreInvalidDay, *common.Response) error
 	//删除全天歇业日期
-	DeleteStoreInvalidDay(context.Context, *IdsDto, *common.Response) error
+	DeleteStoreInvalidDay(context.Context, *IdDTO, *common.Response) error
 	//根据日期获取某个商店的数据
 	GetStoreInvalidDayByDay(context.Context, *StoreInvalidDay, *common.Response) error
 }
@@ -388,7 +388,7 @@ func RegisterStoreHandler(s server.Server, hdlr StoreHandler, opts ...server.Han
 		DeleteCacheStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, out *common.Response) error
 		ListStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, out *common.Response) error
 		CreateStoreInvalidDay(ctx context.Context, in *StoreInvalidDay, out *common.Response) error
-		DeleteStoreInvalidDay(ctx context.Context, in *IdsDto, out *common.Response) error
+		DeleteStoreInvalidDay(ctx context.Context, in *IdDTO, out *common.Response) error
 		GetStoreInvalidDayByDay(ctx context.Context, in *StoreInvalidDay, out *common.Response) error
 	}
 	type Store struct {
@@ -482,7 +482,7 @@ func (h *storeHandler) CreateStoreInvalidDay(ctx context.Context, in *StoreInval
 	return h.StoreHandler.CreateStoreInvalidDay(ctx, in, out)
 }
 
-func (h *storeHandler) DeleteStoreInvalidDay(ctx context.Context, in *IdsDto, out *common.Response) error {
+func (h *storeHandler) DeleteStoreInvalidDay(ctx context.Context, in *IdDTO, out *common.Response) error {
 	return h.StoreHandler.DeleteStoreInvalidDay(ctx, in, out)
 }
 

@@ -48,7 +48,7 @@ service Store {
   //创建全天歇业日期
   rpc CreateStoreInvalidDay(StoreInvalidDay) returns (common.Response){}
   //删除全天歇业日期
-  rpc DeleteStoreInvalidDay(IdsDto) returns (common.Response){}
+  rpc DeleteStoreInvalidDay(IdDTO) returns (common.Response){}
   //根据日期获取某个商店的数据
   rpc GetStoreInvalidDayByDay(StoreInvalidDay) returns (common.Response){}
 

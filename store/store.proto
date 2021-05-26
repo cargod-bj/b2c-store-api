@@ -22,22 +22,46 @@ service Store {
   //查询storename以及address
   rpc ListLocation(IdsDto) returns (common.Response) {}
   //查询商家禁止时间
-  rpc ListStoreInvalidTimeDTO(common.IdDto) returns (common.Response) {}
+  rpc ListStoreInvalidTimeDTO(StoreInvalidTime) returns (common.Response) {}
   //新增或者修改
   rpc AddOrUpdate(StoreInvalidTimeDTO) returns (common.Response) {}
+  //批量新增或者修改
+  rpc AddOrUpdateList(StoreInvalidTimeDTOList) returns (common.Response) {}
+  //新增或者修改
+  rpc GenTimeSlotCache(GenTimeSlotParam) returns (common.Response) {}
+  //获取 timeslot  列表
+  rpc GetTimeSlotCache(GetTimeSlotCon) returns (common.Response) {}
+  //获取 timeslot All 列表
+  rpc GetTimeSlotCacheAll(GetTimeSlotCon) returns (common.Response) {}
+  //添加修改预约人数
+  rpc AddAppointmentNum(AddAppointmentCon) returns (common.Response) {}
+  //减少预约人数
+  rpc MinusAppointmentNum(AddAppointmentCon) returns (common.Response) {}
+  //获取 timeslot 列表状态
+  rpc GetTimeSlotStatusList(TimeSlotStatusReq) returns(common.Response){}
+  //根据商店Id删除歇业时间
+  rpc DeleteStoreInvalidTime(IdsDto) returns (common.Response) {}
+  //清除Redis中的歇业时间
+  rpc DeleteCacheStoreInvalidTime(StoreInvalidTimeDTO) returns (common.Response) {}
+  //查询商家禁止时间
+  rpc ListStoreInvalidTime(StoreInvalidTimeDTO) returns (common.Response) {}
 }
 message StoreInvalidTimeDTOList {
-  repeated StoreInvalidTimeDTO StoreInvalidTimeDTOs  = 1;
+  repeated StoreInvalidTimeDTO StoreInvalidTimeDTOs = 1;
+  repeated TimeSlotEle TimeSlotCacheList = 2;
+  uint64 storeId = 3;
+  string date = 4;
 }
 
 
 message StoreInvalidTimeDTO {
   uint64 id = 1;
   uint64 storeId = 2;
-  int64 day = 3;
+  int64 beginTime = 3;
   uint32 type = 4;
   int64  createTime = 5;
   int64  updateTime = 6;
+  int64 endTime = 7;
 }
 
 message IdDTO {
@@ -47,6 +71,13 @@ message IdDTO {
 // 指定的一组ids
 message IdsDto {
   repeated uint64 ids = 1;
+}
+
+// 生成timeslot参数
+message GenTimeSlotParam {
+  string startDay = 1;
+  uint64 days = 2;
+
 }
 
 message StoreDTO {
@@ -70,6 +101,9 @@ message StoreDTO {
   string managerName = 19;
   string addressUrl = 20;
   int64  openDay = 21;
+  int64 testDriverWarningWorkingNumber = 22;
+  int64 testDriverWarningWeekendNumber = 23;
+  string otherHolidays = 24;
 }
 
 message StoreListDTO {
@@ -97,6 +131,9 @@ message StoreListDTO {
   string dealershipName = 23;
   string addressUrl = 24;
   int64  openDay = 25;
+  int64 testDriverWarningWorkingNumber = 26;
+  int64 testDriverWarningWeekendNumber = 27;
+  string otherHolidays = 28;
 }
 
 // store的简单信息dto
@@ -112,4 +149,47 @@ message StoreCondition{
   uint32 dealerType = 4;
 }
 
+//获取timeslot条件
+message GetTimeSlotCon {
+  string date = 1;
+  uint64 storeId = 2;
+}
+
+//timeslot 信息列表
+message TimeSlotList {
+  repeated TimeSlotEle list = 1;
+}
+
+message TimeSlotEle {
+  int64 beginTime = 1;
+  int64 endTime = 2;
+  int32 status = 3;
+  int64 count = 4;
+}
+
+message AddAppointmentCon {
+  uint64 storeId = 1;
+  int64 beginTime = 2;
+  int64 endTime = 3;
+  uint64 userId = 4;
+}
+
+message StoreInvalidTime{
+  common.Page page = 1;
+  uint64 id = 2;
+}
+
+message TimeSlotStatusReq{
+  uint64 id = 1;
+  string date = 2;
+  string testDriveServiceHours = 3;
+  uint32 type = 4;
+}
+
+message TimeSlotStatusResp {
+  int64 beginTime = 1;
+  int64 endTime = 2;
+  int32 status = 3;
+  uint64 invalidTimeId = 4;
+}
 

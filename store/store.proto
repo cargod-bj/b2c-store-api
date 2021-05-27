@@ -58,6 +58,7 @@ message StoreInvalidTimeDTOList {
   repeated TimeSlotEle TimeSlotCacheList = 2;
   uint64 storeId = 3;
   string date = 4;
+  uint32 allDayStatus = 5;
 }
 
 

@@ -16,7 +16,7 @@ base_home='github.com/cargod-bj/b2c-proto-common/common'
 mkdir -p ${base_home}
 curl -o ${base_home}/common.proto https://raw.githubusercontent.com/cargod-bj/b2c-proto-common/master/common/common.proto
 
-for X in $(find . -name "*.proto" | sed "s|^\./||"); do
+for X in $(find ./store -name "*.proto" | sed "s|^\./||"); do
 	protoc -I$(pwd) --go_out=paths=source_relative:.  --micro_out=paths=source_relative:. $X
 done
 

@@ -56,11 +56,31 @@ type StoreService interface {
 	//查询storename以及address
 	ListLocation(ctx context.Context, in *IdsDto, opts ...client.CallOption) (*common.Response, error)
 	//查询商家禁止时间
-	ListStoreInvalidTimeDTO(ctx context.Context, in *common.IdDto, opts ...client.CallOption) (*common.Response, error)
+	ListStoreInvalidTimeDTO(ctx context.Context, in *StoreInvalidTime, opts ...client.CallOption) (*common.Response, error)
 	//新增或者修改
 	AddOrUpdate(ctx context.Context, in *StoreInvalidTimeDTO, opts ...client.CallOption) (*common.Response, error)
 	//获取全部门店，支持car查询
 	GetStoreALLForCarSearch(ctx context.Context, in *common.EmptyDto, opts ...client.CallOption) (*common.Response, error)
+	//批量新增或者修改
+	AddOrUpdateList(ctx context.Context, in *StoreInvalidTimeDTOList, opts ...client.CallOption) (*common.Response, error)
+	//新增或者修改
+	GenTimeSlotCache(ctx context.Context, in *GenTimeSlotParam, opts ...client.CallOption) (*common.Response, error)
+	//获取 timeslot  列表
+	GetTimeSlotCache(ctx context.Context, in *GetTimeSlotCon, opts ...client.CallOption) (*common.Response, error)
+	//获取 timeslot All 列表
+	GetTimeSlotCacheAll(ctx context.Context, in *GetTimeSlotCon, opts ...client.CallOption) (*common.Response, error)
+	//添加修改预约人数
+	AddAppointmentNum(ctx context.Context, in *AddAppointmentCon, opts ...client.CallOption) (*common.Response, error)
+	//减少预约人数
+	MinusAppointmentNum(ctx context.Context, in *AddAppointmentCon, opts ...client.CallOption) (*common.Response, error)
+	//获取 timeslot 列表状态
+	GetTimeSlotStatusList(ctx context.Context, in *TimeSlotStatusReq, opts ...client.CallOption) (*common.Response, error)
+	//根据商店Id删除歇业时间
+	DeleteStoreInvalidTime(ctx context.Context, in *IdsDto, opts ...client.CallOption) (*common.Response, error)
+	//清除Redis中的歇业时间
+	DeleteCacheStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, opts ...client.CallOption) (*common.Response, error)
+	//查询商家禁止时间
+	ListStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, opts ...client.CallOption) (*common.Response, error)
 }
 
 type storeService struct {
@@ -145,7 +165,7 @@ func (c *storeService) ListLocation(ctx context.Context, in *IdsDto, opts ...cli
 	return out, nil
 }
 
-func (c *storeService) ListStoreInvalidTimeDTO(ctx context.Context, in *common.IdDto, opts ...client.CallOption) (*common.Response, error) {
+func (c *storeService) ListStoreInvalidTimeDTO(ctx context.Context, in *StoreInvalidTime, opts ...client.CallOption) (*common.Response, error) {
 	req := c.c.NewRequest(c.name, "Store.ListStoreInvalidTimeDTO", in)
 	out := new(common.Response)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -175,6 +195,106 @@ func (c *storeService) GetStoreALLForCarSearch(ctx context.Context, in *common.E
 	return out, nil
 }
 
+func (c *storeService) AddOrUpdateList(ctx context.Context, in *StoreInvalidTimeDTOList, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Store.AddOrUpdateList", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storeService) GenTimeSlotCache(ctx context.Context, in *GenTimeSlotParam, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Store.GenTimeSlotCache", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storeService) GetTimeSlotCache(ctx context.Context, in *GetTimeSlotCon, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Store.GetTimeSlotCache", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storeService) GetTimeSlotCacheAll(ctx context.Context, in *GetTimeSlotCon, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Store.GetTimeSlotCacheAll", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storeService) AddAppointmentNum(ctx context.Context, in *AddAppointmentCon, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Store.AddAppointmentNum", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storeService) MinusAppointmentNum(ctx context.Context, in *AddAppointmentCon, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Store.MinusAppointmentNum", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storeService) GetTimeSlotStatusList(ctx context.Context, in *TimeSlotStatusReq, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Store.GetTimeSlotStatusList", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storeService) DeleteStoreInvalidTime(ctx context.Context, in *IdsDto, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Store.DeleteStoreInvalidTime", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storeService) DeleteCacheStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Store.DeleteCacheStoreInvalidTime", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storeService) ListStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Store.ListStoreInvalidTime", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for Store service
 
 type StoreHandler interface {
@@ -191,11 +311,31 @@ type StoreHandler interface {
 	//查询storename以及address
 	ListLocation(context.Context, *IdsDto, *common.Response) error
 	//查询商家禁止时间
-	ListStoreInvalidTimeDTO(context.Context, *common.IdDto, *common.Response) error
+	ListStoreInvalidTimeDTO(context.Context, *StoreInvalidTime, *common.Response) error
 	//新增或者修改
 	AddOrUpdate(context.Context, *StoreInvalidTimeDTO, *common.Response) error
 	//获取全部门店，支持car查询
 	GetStoreALLForCarSearch(context.Context, *common.EmptyDto, *common.Response) error
+	//批量新增或者修改
+	AddOrUpdateList(context.Context, *StoreInvalidTimeDTOList, *common.Response) error
+	//新增或者修改
+	GenTimeSlotCache(context.Context, *GenTimeSlotParam, *common.Response) error
+	//获取 timeslot  列表
+	GetTimeSlotCache(context.Context, *GetTimeSlotCon, *common.Response) error
+	//获取 timeslot All 列表
+	GetTimeSlotCacheAll(context.Context, *GetTimeSlotCon, *common.Response) error
+	//添加修改预约人数
+	AddAppointmentNum(context.Context, *AddAppointmentCon, *common.Response) error
+	//减少预约人数
+	MinusAppointmentNum(context.Context, *AddAppointmentCon, *common.Response) error
+	//获取 timeslot 列表状态
+	GetTimeSlotStatusList(context.Context, *TimeSlotStatusReq, *common.Response) error
+	//根据商店Id删除歇业时间
+	DeleteStoreInvalidTime(context.Context, *IdsDto, *common.Response) error
+	//清除Redis中的歇业时间
+	DeleteCacheStoreInvalidTime(context.Context, *StoreInvalidTimeDTO, *common.Response) error
+	//查询商家禁止时间
+	ListStoreInvalidTime(context.Context, *StoreInvalidTimeDTO, *common.Response) error
 }
 
 func RegisterStoreHandler(s server.Server, hdlr StoreHandler, opts ...server.HandlerOption) error {
@@ -207,9 +347,19 @@ func RegisterStoreHandler(s server.Server, hdlr StoreHandler, opts ...server.Han
 		Get(ctx context.Context, in *common.IdDto, out *common.Response) error
 		ListSimpleInfoByIds(ctx context.Context, in *IdsDto, out *common.Response) error
 		ListLocation(ctx context.Context, in *IdsDto, out *common.Response) error
-		ListStoreInvalidTimeDTO(ctx context.Context, in *common.IdDto, out *common.Response) error
+		ListStoreInvalidTimeDTO(ctx context.Context, in *StoreInvalidTime, out *common.Response) error
 		AddOrUpdate(ctx context.Context, in *StoreInvalidTimeDTO, out *common.Response) error
 		GetStoreALLForCarSearch(ctx context.Context, in *common.EmptyDto, out *common.Response) error
+		AddOrUpdateList(ctx context.Context, in *StoreInvalidTimeDTOList, out *common.Response) error
+		GenTimeSlotCache(ctx context.Context, in *GenTimeSlotParam, out *common.Response) error
+		GetTimeSlotCache(ctx context.Context, in *GetTimeSlotCon, out *common.Response) error
+		GetTimeSlotCacheAll(ctx context.Context, in *GetTimeSlotCon, out *common.Response) error
+		AddAppointmentNum(ctx context.Context, in *AddAppointmentCon, out *common.Response) error
+		MinusAppointmentNum(ctx context.Context, in *AddAppointmentCon, out *common.Response) error
+		GetTimeSlotStatusList(ctx context.Context, in *TimeSlotStatusReq, out *common.Response) error
+		DeleteStoreInvalidTime(ctx context.Context, in *IdsDto, out *common.Response) error
+		DeleteCacheStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, out *common.Response) error
+		ListStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, out *common.Response) error
 	}
 	type Store struct {
 		store
@@ -250,7 +400,7 @@ func (h *storeHandler) ListLocation(ctx context.Context, in *IdsDto, out *common
 	return h.StoreHandler.ListLocation(ctx, in, out)
 }
 
-func (h *storeHandler) ListStoreInvalidTimeDTO(ctx context.Context, in *common.IdDto, out *common.Response) error {
+func (h *storeHandler) ListStoreInvalidTimeDTO(ctx context.Context, in *StoreInvalidTime, out *common.Response) error {
 	return h.StoreHandler.ListStoreInvalidTimeDTO(ctx, in, out)
 }
 
@@ -260,4 +410,44 @@ func (h *storeHandler) AddOrUpdate(ctx context.Context, in *StoreInvalidTimeDTO,
 
 func (h *storeHandler) GetStoreALLForCarSearch(ctx context.Context, in *common.EmptyDto, out *common.Response) error {
 	return h.StoreHandler.GetStoreALLForCarSearch(ctx, in, out)
+}
+
+func (h *storeHandler) AddOrUpdateList(ctx context.Context, in *StoreInvalidTimeDTOList, out *common.Response) error {
+	return h.StoreHandler.AddOrUpdateList(ctx, in, out)
+}
+
+func (h *storeHandler) GenTimeSlotCache(ctx context.Context, in *GenTimeSlotParam, out *common.Response) error {
+	return h.StoreHandler.GenTimeSlotCache(ctx, in, out)
+}
+
+func (h *storeHandler) GetTimeSlotCache(ctx context.Context, in *GetTimeSlotCon, out *common.Response) error {
+	return h.StoreHandler.GetTimeSlotCache(ctx, in, out)
+}
+
+func (h *storeHandler) GetTimeSlotCacheAll(ctx context.Context, in *GetTimeSlotCon, out *common.Response) error {
+	return h.StoreHandler.GetTimeSlotCacheAll(ctx, in, out)
+}
+
+func (h *storeHandler) AddAppointmentNum(ctx context.Context, in *AddAppointmentCon, out *common.Response) error {
+	return h.StoreHandler.AddAppointmentNum(ctx, in, out)
+}
+
+func (h *storeHandler) MinusAppointmentNum(ctx context.Context, in *AddAppointmentCon, out *common.Response) error {
+	return h.StoreHandler.MinusAppointmentNum(ctx, in, out)
+}
+
+func (h *storeHandler) GetTimeSlotStatusList(ctx context.Context, in *TimeSlotStatusReq, out *common.Response) error {
+	return h.StoreHandler.GetTimeSlotStatusList(ctx, in, out)
+}
+
+func (h *storeHandler) DeleteStoreInvalidTime(ctx context.Context, in *IdsDto, out *common.Response) error {
+	return h.StoreHandler.DeleteStoreInvalidTime(ctx, in, out)
+}
+
+func (h *storeHandler) DeleteCacheStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, out *common.Response) error {
+	return h.StoreHandler.DeleteCacheStoreInvalidTime(ctx, in, out)
+}
+
+func (h *storeHandler) ListStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, out *common.Response) error {
+	return h.StoreHandler.ListStoreInvalidTime(ctx, in, out)
 }

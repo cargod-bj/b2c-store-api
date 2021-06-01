@@ -57,7 +57,7 @@ message StoreInvalidTimeDTOList {
   repeated StoreInvalidTimeDTO StoreInvalidTimeDTOs = 1;
   repeated TimeSlotEle TimeSlotCacheList = 2;
   uint64 storeId = 3;
-  string date = 4;
+  int64 date = 4;
   uint32 allDayStatus = 5;
 }
 

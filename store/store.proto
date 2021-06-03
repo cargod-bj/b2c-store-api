@@ -142,7 +142,6 @@ message StoreListDTO {
   int64 testDriverWarningWorkingNumber = 26;
   int64 testDriverWarningWeekendNumber = 27;
   string otherHolidays = 28;
-  repeated uint64 invalidTimeIds = 29;
 }
 
 // store的简单信息dto

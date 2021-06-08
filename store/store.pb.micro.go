@@ -81,6 +81,12 @@ type StoreService interface {
 	DeleteCacheStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, opts ...client.CallOption) (*common.Response, error)
 	//查询商家禁止时间
 	ListStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, opts ...client.CallOption) (*common.Response, error)
+	//创建全天歇业日期
+	CreateStoreInvalidDay(ctx context.Context, in *StoreInvalidDay, opts ...client.CallOption) (*common.Response, error)
+	//删除全天歇业日期
+	DeleteStoreInvalidDay(ctx context.Context, in *IdDTO, opts ...client.CallOption) (*common.Response, error)
+	//根据日期获取某个商店的数据
+	GetStoreInvalidDayByDay(ctx context.Context, in *StoreInvalidDay, opts ...client.CallOption) (*common.Response, error)
 }
 
 type storeService struct {
@@ -295,6 +301,36 @@ func (c *storeService) ListStoreInvalidTime(ctx context.Context, in *StoreInvali
 	return out, nil
 }
 
+func (c *storeService) CreateStoreInvalidDay(ctx context.Context, in *StoreInvalidDay, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Store.CreateStoreInvalidDay", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storeService) DeleteStoreInvalidDay(ctx context.Context, in *IdDTO, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Store.DeleteStoreInvalidDay", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storeService) GetStoreInvalidDayByDay(ctx context.Context, in *StoreInvalidDay, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Store.GetStoreInvalidDayByDay", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for Store service
 
 type StoreHandler interface {
@@ -336,6 +372,12 @@ type StoreHandler interface {
 	DeleteCacheStoreInvalidTime(context.Context, *StoreInvalidTimeDTO, *common.Response) error
 	//查询商家禁止时间
 	ListStoreInvalidTime(context.Context, *StoreInvalidTimeDTO, *common.Response) error
+	//创建全天歇业日期
+	CreateStoreInvalidDay(context.Context, *StoreInvalidDay, *common.Response) error
+	//删除全天歇业日期
+	DeleteStoreInvalidDay(context.Context, *IdDTO, *common.Response) error
+	//根据日期获取某个商店的数据
+	GetStoreInvalidDayByDay(context.Context, *StoreInvalidDay, *common.Response) error
 }
 
 func RegisterStoreHandler(s server.Server, hdlr StoreHandler, opts ...server.HandlerOption) error {
@@ -360,6 +402,9 @@ func RegisterStoreHandler(s server.Server, hdlr StoreHandler, opts ...server.Han
 		DeleteStoreInvalidTime(ctx context.Context, in *IdsDto, out *common.Response) error
 		DeleteCacheStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, out *common.Response) error
 		ListStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, out *common.Response) error
+		CreateStoreInvalidDay(ctx context.Context, in *StoreInvalidDay, out *common.Response) error
+		DeleteStoreInvalidDay(ctx context.Context, in *IdDTO, out *common.Response) error
+		GetStoreInvalidDayByDay(ctx context.Context, in *StoreInvalidDay, out *common.Response) error
 	}
 	type Store struct {
 		store
@@ -450,4 +495,16 @@ func (h *storeHandler) DeleteCacheStoreInvalidTime(ctx context.Context, in *Stor
 
 func (h *storeHandler) ListStoreInvalidTime(ctx context.Context, in *StoreInvalidTimeDTO, out *common.Response) error {
 	return h.StoreHandler.ListStoreInvalidTime(ctx, in, out)
+}
+
+func (h *storeHandler) CreateStoreInvalidDay(ctx context.Context, in *StoreInvalidDay, out *common.Response) error {
+	return h.StoreHandler.CreateStoreInvalidDay(ctx, in, out)
+}
+
+func (h *storeHandler) DeleteStoreInvalidDay(ctx context.Context, in *IdDTO, out *common.Response) error {
+	return h.StoreHandler.DeleteStoreInvalidDay(ctx, in, out)
+}
+
+func (h *storeHandler) GetStoreInvalidDayByDay(ctx context.Context, in *StoreInvalidDay, out *common.Response) error {
+	return h.StoreHandler.GetStoreInvalidDayByDay(ctx, in, out)
 }

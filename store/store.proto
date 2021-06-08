@@ -47,6 +47,13 @@ service Store {
   rpc DeleteCacheStoreInvalidTime(StoreInvalidTimeDTO) returns (common.Response) {}
   //查询商家禁止时间
   rpc ListStoreInvalidTime(StoreInvalidTimeDTO) returns (common.Response) {}
+  //创建全天歇业日期
+  rpc CreateStoreInvalidDay(StoreInvalidDay) returns (common.Response){}
+  //删除全天歇业日期
+  rpc DeleteStoreInvalidDay(IdDTO) returns (common.Response){}
+  //根据日期获取某个商店的数据
+  rpc GetStoreInvalidDayByDay(StoreInvalidDay) returns (common.Response){}
+
 }
 
 message StoreEntiretyDTO {
@@ -57,7 +64,8 @@ message StoreInvalidTimeDTOList {
   repeated StoreInvalidTimeDTO StoreInvalidTimeDTOs = 1;
   repeated TimeSlotEle TimeSlotCacheList = 2;
   uint64 storeId = 3;
-  string date = 4;
+  int64 date = 4;
+  uint32 allDayStatus = 5;
 }
 
 
@@ -198,5 +206,11 @@ message TimeSlotStatusResp {
   int64 endTime = 2;
   int32 status = 3;
   uint64 invalidTimeId = 4;
+}
+
+message StoreInvalidDay{
+  uint64 id = 1;
+  uint64 storeId = 2;
+  int64  day = 3;
 }
 

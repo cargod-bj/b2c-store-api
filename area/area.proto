@@ -13,6 +13,7 @@ service Area {
   rpc ChildList(ParentCode) returns (common.Response) {}
   // 根据指定state和area批量获取相关数据，返回数据StateAndAreaList
   rpc GetStateAndAreaByCodes(StateAndAreaCodeReq) returns (common.Response) {}
+  rpc ChildListById(common.IdDto) returns (common.Response) {}
 }
 
 
